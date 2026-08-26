@@ -1,0 +1,14 @@
+{
+  "name": "cyrano-task-manager",
+  "private": true,
+  "description": "Cyrano-Task-Manager — internal task tool, operating system first",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node -e \"console.log('test: no suites yet — first contract lands with the first migration')\"",
+    "typecheck": "node -e \"console.log('typecheck: no tsc graph yet')\"",
+    "lint": "node -e \"console.log('lint: biome not installed yet')\"",
+    "check": "npm test"
+  }
+}
