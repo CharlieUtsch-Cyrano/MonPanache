@@ -14,6 +14,10 @@ reject PRs that introduce aliases.
 | **Priority** | urgency, severity | `p0`–`p3`, default `p2` |
 | **View** | filter set, saved search, smart list | A named/shareable combination of URL filters (Today, Overdue) |
 | **Due date** | deadline, ETA | The date a task should be finished. `due_at` |
+| **Bucket** | category, type, area (loose) | The *type* of work a task is (recurring pattern) — distinct from Project (which effort) and Label (free tag). Taxonomy emerges from real use + backfill |
+| **Source** | integration, channel, input | Where a task originated: `manual`, `gmail`, `zoom` — kept on the task with a link back |
+| **Suggested task** | auto-task, AI task, draft | A task **proposed** by extraction, waiting in the review queue. Becomes a Task only when a human accepts it |
+| **Customer** | client, account, tenant (that word is taken) | The external party a task relates to (e.g. a hospital). An attribute here, not a login boundary |
 | **Activity event** | audit row, history, log entry (in UI say “activity”) | One recorded change. Table: `activity_events`; feeds the feed + undo |
 | **Run** | job, spinner, toast-with-side-effects | A visible, undoable execution of a command in the activity store |
 | **Command** | handler, onClick, RPC | Typed verb in the registry + contracts package (`task.create`) |

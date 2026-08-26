@@ -61,13 +61,21 @@ directly. Whatever backend is chosen, it is called only through the
 | `supabase/` | Migrations + RLS policies (one owner for schema) |
 | `docs` live at repo root (house convention) | |
 
+## The product in one sentence
+
+Tasks originate where work happens — Zoom customer calls, Gmail, your head —
+and this tool gathers them onto one board, attaches context and the
+customer, sorts them into buckets, and ranks what deserves attention now
+vs today vs this week. Automation of recurring task types comes much later.
+Full vision: PROJECT-MEMORY.md.
+
 ## First product slice
 
-Capture → organize → finish: create a task in two keystrokes (⌘K),
-organize into projects with statuses and labels, filter via a URL-shareable
-view, and mark work done. That slice proves the shell, commands, data layer,
-and RLS. Recurring tasks, reminders, and integrations come after.
-See PROJECT-MEMORY.md.
+The manual spine: capture a task in two keystrokes (⌘K), organize into
+projects/buckets with statuses and urgency, filter via a URL-shareable view,
+mark work done. Extracted tasks need somewhere to land — this is that
+somewhere. Gmail ingestion is the second slice, Zoom the third, backfill
+after that.
 
 ## Verify
 

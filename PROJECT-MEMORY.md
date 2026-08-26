@@ -4,6 +4,28 @@ Compact state + decision log. Anyone (teammate or a new AI session) should
 read this and continue without reopening settled calls. Update when a decision
 lands. Last updated: **2026-08-26**.
 
+## Product vision (Charlie, 2026-08-26)
+
+Not a to-do list — a **task intelligence tool**. Tasks originate where work
+happens; the tool gathers, understands, and ranks them:
+
+- **Sources:** Zoom customer-call transcripts (corporate license already
+  transcribes + summarizes), Gmail (client requests), and manual capture
+  (head, hallway conversations).
+- **Extraction:** an AI step reads a transcript/email and **proposes** tasks
+  with context and the customer attached. Proposed tasks land in a review
+  queue; a human accepts them onto the board. AI never silently creates.
+- **Understanding:** every task gets a **bucket** (type of work — so
+  recurring patterns become visible) and an urgency tier. Priority mapping:
+  `p0` = now, `p1` = end of day, `p2` = this week, `p3` = note.
+- **Institutional knowledge:** a one-time Gmail backfill reads historical
+  email to learn what kinds of tasks recur, seeding the buckets.
+- **Automation of recurring task types is explicitly LATER** — not designed
+  for until the tracking/understanding layer has proven itself.
+
+Build order: manual spine first (board, capture, buckets, urgency), then
+Gmail ingestion, then Zoom, then backfill, then automation.
+
 ## Where things stand
 
 - **Charter OS is in** (2026-08-26): README reading order, CLAUDE/AGENTS
@@ -51,15 +73,25 @@ lands. Last updated: **2026-08-26**.
 
 ## Open (named later, not architecture)
 
-- **Backend (decide before the first migration — blocks Bolt 3).** Supabase
-  (new dedicated project) was proposed; Charlie wants to rethink it
-  (2026-08-26). Whatever is chosen, the `lib/data/` seam and RLS-or-
-  equivalent row security rules stand. Do not install a backend SDK or
-  write a migration until this is locked.
+- **Backend (decide before the first migration — blocks Bolt 3).** Charlie
+  wants to rethink the Supabase proposal (2026-08-26). The vision raises the
+  stakes: the backend must also run **scheduled ingestion jobs** (Gmail,
+  Zoom) and an **LLM extraction step** — a static SPA alone cannot. Whatever
+  is chosen, the `lib/data/` seam and row-security rules stand. No backend
+  SDK, no migration, until locked.
+- **Compliance revision (needs Charlie's explicit yes).** Ingestion means
+  storing email/transcript excerpts as task context — COMPLIANCE.md
+  currently forbids storing work product. Proposed revision: short excerpts
+  allowed as task context; hard **no-PHI** line stays (hospital-call
+  content that is patient-related must never land on the board).
+- **Bucket taxonomy** — the nouns come from the Gmail backfill + real use,
+  not invented up front. `buckets` is the working name (GLOSSARY).
+- Zoom + Gmail API access details (scopes, app registration) — at their
+  slice, not before.
 - Hosting for the SPA (static host TBD; not the Hostinger app VPS).
 - Auth provider (depends on the backend decision).
-- Recurring tasks / reminders — v2 candidates, not slice 1.
-- Integrations (GitHub issues, calendar) — explicitly out of slice 1.
+- Automation of recurring task types — explicitly later, after tracking
+  has proven itself.
 
 ## Next
 
