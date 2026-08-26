@@ -8,14 +8,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cyrano/task-manager-contracts": "*",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.3.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
     "@vitejs/plugin-react": "^6.1.0",
+    "tailwindcss": "^4.3.3",
     "vite": "^8.2.2"
   }
 }

@@ -18,6 +18,7 @@ Until packages are installed, this lists the **intended** stack. Empty
 | biome | lint/format | MIT / Apache-2.0 | |
 | @types/react / @types/react-dom / @types/node | dev types | MIT | tooling only |
 | @vitejs/plugin-react | build | MIT | |
+| @tailwindcss/vite | build | MIT | |
 | husky | git hooks | MIT | |
 
 Rejected classes: GPL, LGPL, AGPL, MPL, SSPL, BSL, Elastic, non-commercial.

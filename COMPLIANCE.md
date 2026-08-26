@@ -1,27 +1,30 @@
 # Compliance
 
-**Policy: this tool tracks the work; it does not store the work product.**
+**Policy (revised 2026-08-26, approved by Charlie): tasks may carry short
+excerpts of the communication they came from — with hard lines.**
 
-Tasks, projects, and comments are metadata about work — titles, statuses,
-dates, links. The boundary:
+The tool's job is understanding tasks in context, so a task created from an
+email or a Zoom transcript may store a **short excerpt** of that source as
+context, plus a link back to the original. The boundary:
 
-- **Never paste PHI** or anything patient-related into a task. Cyrano's
-  customer repos prohibit PHI; a task tracker is not an exception, it is the
-  easiest place to leak it accidentally.
-- **Never paste customer-confidential content** (contract terms, credentials,
-  unreleased hospital material). Link to the system of record instead.
-- **Never store secrets** (API keys, passwords) in a task, comment, or label.
-
-If a task needs the sensitive thing to make sense, it links to where that
-thing properly lives (the repo, the drive, the vault) — it does not copy it.
+- **Never PHI.** If a hospital call or email contains patient-related
+  content, that content must not land in a task — the extraction step must
+  drop it and the human review step is the backstop. PHI found anyway gets
+  purged (explicit gated purge), and the incident noted in PROJECT-MEMORY.
+- **Excerpts, not archives.** Store the sentences that explain the task,
+  not the whole email or transcript. The system of record stays Gmail/Zoom;
+  the task links back to it.
+- **Never secrets.** API keys, passwords, and credentials do not belong in
+  a task, comment, label, or excerpt — human-typed or extracted.
 
 ## Enforcement
 
-- Onboarding note + this file.
-- Activity events and logs contain ids and user-typed titles only — treat
-  titles as potentially sensitive in any future export/integration.
-- If sensitive data lands anyway: purge the row (explicit gated purge, not
-  just soft delete) and note the incident in PROJECT-MEMORY.
+- The extraction prompt excludes PHI and secrets by instruction; accepted
+  suggestions pass through human review before reaching the board.
+- Activity events and logs contain ids and titles; treat titles and
+  excerpts as sensitive in any future export or integration.
+- Purge path: soft delete is the default everywhere, but a compliance purge
+  (hard delete of a row and its excerpt) is an explicit, gated action.
 
 ## If this tool ever holds regulated data
 

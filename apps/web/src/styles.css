@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+/* Class-based dark mode: <html class="dark"> activates dark variant. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Inter",
+    "Segoe UI", Roboto, sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-brand: var(--brand-primary);
+  --color-brand-dark: var(--brand-secondary);
+  /* brand-ink: the ACCESSIBLE brand color for text/meaningful icons (WCAG
+     1.4.3 — 4.5:1). The light brand (cyan) fails on light surfaces, so ink
+     resolves to the dark brand in light mode and the light brand in dark
+     mode. Use `text-brand-ink` for any brand-colored text; keep `brand` for
+     fills, tints, and decorative accents. */
+  --color-brand-ink: var(--brand-ink);
+
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+
+  /* Urgency tokens (DESIGN-GUIDELINES §4): the board's column accents.
+     Semantic — components never reach for raw danger/warning directly
+     to mean urgency. */
+  --color-urgency-now: var(--danger);
+  --color-urgency-today: var(--warning);
+  --color-urgency-week: var(--success);
+  --color-urgency-note: var(--muted);
+}
+
+/* Brand color slots — Cyrano palette. */
+:root {
+  --brand-primary: #00c4d3; /* light brand */
+  --brand-secondary: #001e45; /* dark brand */
+}
+
+/* ============ LIGHT THEME (default) ============ */
+:root {
+  --background: oklch(0.985 0.003 270);
+  --foreground: oklch(0.18 0.018 270);
+
+  --surface: oklch(1 0 0);
+  --surface-2: oklch(0.965 0.005 270);
+  --surface-3: oklch(0.93 0.008 270);
+
+  --border: oklch(0.88 0.008 270);
+  --border-soft: oklch(0.93 0.006 270);
+
+  --muted: oklch(0.5 0.015 270);
+  --muted-foreground: oklch(0.42 0.018 270);
+
+  --primary: var(--brand-primary, oklch(0.58 0.18 255));
+  --primary-foreground: oklch(0.99 0.005 270);
+
+  --accent: var(--brand-secondary, oklch(0.62 0.13 185));
+  --accent-foreground: oklch(0.99 0.005 270);
+
+  --warning: oklch(0.7 0.16 75);
+  --danger: oklch(0.6 0.22 25);
+  --success: oklch(0.62 0.16 155);
+
+  /* Accessible brand text on light surfaces = the dark brand variant. */
+  --brand-ink: var(--brand-secondary);
+}
+
+/* ============ DARK THEME ============ */
+.dark {
+  --background: oklch(0.16 0.012 270);
+  --foreground: oklch(0.95 0.005 270);
+
+  --surface: oklch(0.2 0.015 270);
+  --surface-2: oklch(0.235 0.018 270);
+  --surface-3: oklch(0.275 0.022 270);
+
+  --border: oklch(0.32 0.025 270);
+  --border-soft: oklch(0.26 0.02 270);
+
+  --muted: oklch(0.7 0.015 270);
+  --muted-foreground: oklch(0.62 0.02 270);
+
+  --primary: var(--brand-primary, oklch(0.72 0.16 245));
+  --primary-foreground: oklch(0.18 0.018 270);
+
+  --accent: var(--brand-secondary, oklch(0.78 0.13 185));
+  --accent-foreground: oklch(0.18 0.018 270);
+
+  --warning: oklch(0.82 0.14 80);
+  --danger: oklch(0.7 0.2 25);
+  --success: oklch(0.78 0.14 155);
+
+  /* Accessible brand text on dark surfaces = the light brand variant. */
+  --brand-ink: var(--brand-primary);
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--background);
+    color: var(--foreground);
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--surface-3);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--border);
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}

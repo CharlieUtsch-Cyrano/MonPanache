@@ -70,6 +70,14 @@ Gmail ingestion, then Zoom, then backfill, then automation.
    contract uses these. **Priorities:** `p0`–`p3`, default `p2`.
 9. **Users:** single user (Charlie) first; schema keeps `user_id` on every
    table so a team mode is a policy change, not a migration.
+10. **Morning view is urgency columns (locked 2026-08-26, Charlie):** the
+    board shows columns Now (`p0`) / Today (`p1`) / This Week (`p2`) /
+    Notes (`p3`) — columns are **urgency**, not status. Status lives on the
+    task row. Design assumption: 15–20 new tasks arrive per day across all
+    sources — columns must stay readable at that volume.
+11. **Excerpt storage approved (2026-08-26, Charlie):** tasks may carry
+    short email/transcript excerpts as context. The hard **no-PHI** line
+    stays. COMPLIANCE.md revised same change.
 
 ## Open (named later, not architecture)
 
@@ -79,11 +87,6 @@ Gmail ingestion, then Zoom, then backfill, then automation.
   Zoom) and an **LLM extraction step** — a static SPA alone cannot. Whatever
   is chosen, the `lib/data/` seam and row-security rules stand. No backend
   SDK, no migration, until locked.
-- **Compliance revision (needs Charlie's explicit yes).** Ingestion means
-  storing email/transcript excerpts as task context — COMPLIANCE.md
-  currently forbids storing work product. Proposed revision: short excerpts
-  allowed as task context; hard **no-PHI** line stays (hospital-call
-  content that is patient-related must never land on the board).
 - **Bucket taxonomy** — the nouns come from the Gmail backfill + real use,
   not invented up front. `buckets` is the working name (GLOSSARY).
 - Zoom + Gmail API access details (scopes, app registration) — at their
