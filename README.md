@@ -41,20 +41,16 @@ New to the project? Read these in order. The first four are the essential path.
 
 ## Stack
 
-Framework conventions are **locked** (commands, URL state, tokens, Zod at the
-boundary). Concrete stack choices below are **proposed** until confirmed in
-PROJECT-MEMORY.md — do not install anything before that confirmation.
-
-| Layer | Choice |
-| --- | --- |
-| Web | React 19, TypeScript strict, Vite, Tailwind v4, TanStack Router, Zustand, Radix, Zod |
-| Data | Supabase (Postgres + Auth + RLS) — dedicated project, **never** the Lab database |
-| Quality | Biome, Vitest, `npm run check` always green |
+| Layer | Choice | Status |
+| --- | --- | --- |
+| Web | React 19, TypeScript strict, Vite, Tailwind v4, TanStack Router, Zustand, Radix, Zod | **Locked** (PROJECT-MEMORY #7) |
+| Data | **TBD** — decision required before the first migration (PROJECT-MEMORY, Open) | Open |
+| Quality | Biome, Vitest, `npm run check` always green | **Locked** |
 
 Why this stack: it is the same CTO frontend stack as CyranoApp-AI-Production
 and CyranoAPP-Design, so patterns, components, and muscle memory port
-directly. Supabase (its own project) is the fastest credible backend for an
-internal tool and keeps a documented seam to graduate behind a BFF later.
+directly. Whatever backend is chosen, it is called only through the
+`lib/data/` seam with row-level security (or equivalent) as the boundary.
 
 ## Layout
 

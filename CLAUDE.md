@@ -83,9 +83,9 @@ See PROJECT-MEMORY.md for the full log. Short list:
 
 - Empty `apps/*` / `packages/*` / `supabase/` skeletons during charter — they
   exist so layering is real before features land.
-- `npm run lint` / `typecheck` stubs until Biome and `tsc` are installed.
-- The proposed-but-unconfirmed stack rows in README — confirmation is a
-  PROJECT-MEMORY entry, not a code change.
+- The `supabase/` folder while the backend decision is **Open** in
+  PROJECT-MEMORY — do not install a backend SDK or write a migration until
+  that decision is locked.
 
 ## Verifying your work (required before claiming done)
 

@@ -1,14 +1,28 @@
 {
   "name": "cyrano-task-manager",
   "private": true,
+  "type": "module",
   "description": "Cyrano-Task-Manager — internal task tool, operating system first",
   "engines": {
     "node": ">=22"
   },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "test": "node -e \"console.log('test: no suites yet — first contract lands with the first migration')\"",
-    "typecheck": "node -e \"console.log('typecheck: no tsc graph yet')\"",
-    "lint": "node -e \"console.log('lint: biome not installed yet')\"",
-    "check": "npm test"
+    "dev": "npm run dev -w apps/web",
+    "typecheck": "tsc -p packages/contracts && tsc -p apps/web && tsc -p apps/web/tsconfig.node.json",
+    "lint": "biome check .",
+    "test": "vitest run",
+    "build": "npm run build -w apps/web",
+    "check": "npm run typecheck && npm run lint && npm test && npm run build",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.10",
+    "husky": "^9.1.7",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
   }
 }

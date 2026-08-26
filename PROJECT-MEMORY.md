@@ -6,11 +6,16 @@ lands. Last updated: **2026-08-26**.
 
 ## Where things stand
 
-- **Charter OS is in.** Framework docs modeled on CyranoApp-AI-Production
-  (2026-08-26): README reading order, CLAUDE/AGENTS twins, FEATURE-PLAYBOOK,
-  guidelines, glossary, decision log. **No product code exists yet.**
-- Skeleton folders (`apps/web`, `packages/contracts`, `supabase/`) hold
-  READMEs only so layering is real before features land.
+- **Charter OS is in** (2026-08-26): README reading order, CLAUDE/AGENTS
+  twins, FEATURE-PLAYBOOK, guidelines, glossary, decision log — modeled on
+  CyranoApp-AI-Production.
+- **Bolt 1 done (2026-08-26): the quality graph is real.** npm workspaces;
+  TypeScript 7 strict; Biome 2; Vitest 4; Vite 8 + React 19 placeholder in
+  `apps/web` (shell is Bolt 2); first locked contracts
+  (`task-status`, `task-priority`) with 6 passing tests; husky pre-commit
+  runs `npm run check` = typecheck + lint + test + build, zero warnings.
+- `supabase/` still holds only a README — frozen until the backend decision
+  (Open, below) is locked.
 
 ## Locked decisions
 
@@ -35,38 +40,39 @@ lands. Last updated: **2026-08-26**.
 6. **Agent sessions: propose → gate → bolt; depth matches the work.**
    Corrections become standing rules. Same model as the production repo; do
    not install a second agent OS.
-
-## Proposed (confirm before first code — then move up to Locked)
-
-- **Stack:** React 19, TypeScript strict, Vite, Tailwind v4, TanStack Router,
-  Zustand, Radix, Zod; Biome + Vitest. (The CTO stack — patterns port from
-  Design/Production.)
-- **Backend:** Supabase — a **new, dedicated** project (never Lab's) —
-  Postgres + Auth + RLS, called only from `lib/data/`.
-- **Task statuses:** `inbox`, `todo`, `in_progress`, `blocked`, `done`,
-  `cancelled`. UI may render friendlier labels; the contract uses these.
-- **Priorities:** `p0`–`p3`, default `p2`.
-- **Users:** single user (Charlie) first; schema keeps `user_id` on every
-  table so a team mode is a policy change, not a migration.
+7. **Frontend stack (locked 2026-08-26, Charlie):** React 19, TypeScript
+   strict, Vite, Tailwind v4, TanStack Router, Zustand, Radix, Zod;
+   Biome + Vitest. (The CTO stack — patterns port from Design/Production.)
+8. **Task statuses (locked 2026-08-26):** `inbox`, `todo`, `in_progress`,
+   `blocked`, `done`, `cancelled`. UI may render friendlier labels; the
+   contract uses these. **Priorities:** `p0`–`p3`, default `p2`.
+9. **Users:** single user (Charlie) first; schema keeps `user_id` on every
+   table so a team mode is a policy change, not a migration.
 
 ## Open (named later, not architecture)
 
+- **Backend (decide before the first migration — blocks Bolt 3).** Supabase
+  (new dedicated project) was proposed; Charlie wants to rethink it
+  (2026-08-26). Whatever is chosen, the `lib/data/` seam and RLS-or-
+  equivalent row security rules stand. Do not install a backend SDK or
+  write a migration until this is locked.
 - Hosting for the SPA (static host TBD; not the Hostinger app VPS).
-- Auth provider inside Supabase (Google first, matching the rest of Cyrano?).
+- Auth provider (depends on the backend decision).
 - Recurring tasks / reminders — v2 candidates, not slice 1.
 - Integrations (GitHub issues, calendar) — explicitly out of slice 1.
 
 ## Next
 
-1. Confirm the **Proposed** block above (human yes → move rows to Locked).
-2. Wire the real quality graph: Biome, `tsc`, Vitest, husky, so
-   `npm run check` is type + lint + test, not a stub.
-3. Seed `apps/web` shell (rail + ⌘K palette + theme) by porting patterns from
-   CyranoAPP-Design — shell only, no features.
-4. First schema migration (`projects`, `tasks`, `labels`, `task_labels`,
-   `activity_events`) with RLS + policy tests.
-5. Slice 1: capture (⌘K quick-add) → organize (project/status/label) →
-   filtered URL views → done.
+1. ~~Confirm the Proposed block~~ — done 2026-08-26: frontend stack +
+   taxonomy locked (rows 7–8); backend moved to Open, decide before Bolt 3.
+2. ~~Bolt 1: wire the real quality graph~~ — done 2026-08-26.
+3. **Bolt 2:** seed `apps/web` shell (rail + ⌘K palette + theme) by porting
+   patterns from CyranoAPP-Design — shell only, no features.
+4. **Bolt 3:** lock the backend, then first schema migration (`projects`,
+   `tasks`, `labels`, `task_labels`, `activity_events`) with row-security
+   policy tests.
+5. **Bolt 4:** slice 1 — capture (⌘K quick-add) → organize
+   (project/status/label) → filtered URL views → done.
 
-Do **not** start slice 1 features until the web seed exists and the RLS
-policy tests can fail a PR.
+Do **not** start slice 1 features until the web seed exists and the
+row-security policy tests can fail a PR.

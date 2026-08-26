@@ -66,8 +66,8 @@ trees at runtime and never point this app at their databases.
 ## Do not “fix”
 
 - Empty `apps/*` / `packages/*` / `supabase/` skeletons during charter.
-- `npm run lint` / `typecheck` stubs until Biome and `tsc` are installed.
-- Proposed-but-unconfirmed stack rows in README.
+- The `supabase/` folder while the backend decision is **Open** in
+  PROJECT-MEMORY — no backend SDK, no migrations, until it is locked.
 
 ## Verify before claiming done
 

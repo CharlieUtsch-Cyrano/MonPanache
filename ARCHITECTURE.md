@@ -3,6 +3,10 @@
 Cyrano-Task-Manager is a **single-page app over one data layer**: one Git
 repo, one deployable SPA, one command/contract language, one database.
 
+> **Backend note (2026-08-26):** the concrete backend is an **Open** decision
+> in PROJECT-MEMORY — Supabase below describes the proposed shape. The
+> `lib/data/` seam and row-security boundary hold regardless of the choice.
+
 ## Shape
 
 ```

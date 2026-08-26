@@ -3,6 +3,11 @@
 Security posture for an internal tool with a real database. Lighter than
 customer production, but the boundary rules are binding.
 
+> **Backend note (2026-08-26):** the backend is an **Open** decision in
+> PROJECT-MEMORY. Controls below are written against the proposed Supabase
+> shape; whatever is chosen must provide the same guarantees (row security
+> enforced server-side, no privileged key in the browser, policy tests).
+
 ## Threats we actually have
 
 - Cross-user read/write if a table ships without RLS policies.

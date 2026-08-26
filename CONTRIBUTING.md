@@ -23,7 +23,8 @@ Do not merge a red tree "because the app is empty."
 
 ## Quality gates (non-negotiable)
 
-1. **Pre-commit** formats staged files and runs tests, once husky is wired.
+1. **Pre-commit** runs `npm run check` (husky). A commit with a red tree
+   does not happen.
 2. **CI** on every PR: audit → typecheck → lint → test.
 3. **Tests are not optional.** Behavior changes ship tests in the same PR.
    Never `--passWithNoTests` once a suite exists.
