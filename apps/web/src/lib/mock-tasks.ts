@@ -19,6 +19,8 @@ export type MockTask = {
   priority: TaskPriority;
   status: TaskStatus;
   dueDate?: string;
+  /** Display time for today-scheduled tasks (mock; real times come with data). */
+  dueTime?: string;
   excerpt?: string;
 };
 
@@ -69,6 +71,7 @@ export const MOCK_TASKS: MockTask[] = [
     priority: "p0",
     status: "in_progress",
     dueDate: iso(0),
+    dueTime: "2:00 pm",
     excerpt:
       "…we'd need the corrected captions back before our internal review at two…",
   },
@@ -114,6 +117,7 @@ export const MOCK_TASKS: MockTask[] = [
     priority: "p1",
     status: "todo",
     dueDate: iso(0),
+    dueTime: "5:00 pm",
     excerpt:
       "…their marketing team would love the same checklist we used last time…",
   },

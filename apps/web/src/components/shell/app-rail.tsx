@@ -1,7 +1,7 @@
 /**
- * Left rail, per the MonPanache design: logo, Board (live), Analysis and
- * Settings (placeholders until Bolt C), theme toggle. The full rail
- * behavior (flyouts, sign out) arrives with auth.
+ * Left rail matching the design export: dark avatar circle, dark-filled
+ * selected icon, Analysis and Settings placeholders, theme toggle at the
+ * bottom. Sign-out and real navigation arrive with auth (Bolt C).
  */
 export function AppRail({
   theme,
@@ -13,19 +13,19 @@ export function AppRail({
   return (
     <nav
       aria-label="Primary"
-      className="flex w-14 shrink-0 flex-col items-center gap-2 border-r border-border-soft bg-surface py-3"
+      className="flex w-14 shrink-0 flex-col items-center gap-3 border-r border-border-soft bg-surface py-3"
     >
-      <img
-        src="/mp-logo.png"
-        alt="MonPanache"
+      <span
         title="MonPanache — know what needs you now"
-        className="size-9 rounded-xl"
-      />
+        className="flex size-9 items-center justify-center rounded-full bg-brand-dark text-xs font-bold text-white"
+      >
+        MP
+      </span>
       <button
         type="button"
         aria-label="Board"
         aria-current="page"
-        className="mt-2 flex size-9 items-center justify-center rounded-lg bg-surface-3 text-base"
+        className="flex size-9 items-center justify-center rounded-xl bg-brand-dark text-base text-white"
       >
         ▦
       </button>
@@ -34,7 +34,7 @@ export function AppRail({
         aria-label="Analysis (coming soon)"
         disabled
         title="Analysis — coming soon"
-        className="flex size-9 items-center justify-center rounded-lg text-base text-muted opacity-50"
+        className="flex size-9 items-center justify-center rounded-xl text-base text-muted opacity-50"
       >
         ◔
       </button>
@@ -43,7 +43,7 @@ export function AppRail({
         aria-label="Settings (coming soon)"
         disabled
         title="Settings — coming soon"
-        className="flex size-9 items-center justify-center rounded-lg text-base text-muted opacity-50"
+        className="flex size-9 items-center justify-center rounded-xl text-base text-muted opacity-50"
       >
         ⚙
       </button>
@@ -53,7 +53,7 @@ export function AppRail({
         aria-label={
           theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
         }
-        className="mt-auto flex size-9 items-center justify-center rounded-lg text-base hover:bg-surface-2"
+        className="mt-auto flex size-9 items-center justify-center rounded-xl text-base hover:bg-surface-2"
       >
         {theme === "dark" ? "☀" : "☾"}
       </button>

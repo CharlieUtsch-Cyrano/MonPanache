@@ -49,10 +49,9 @@
 
   /* Urgency tokens (DESIGN-GUIDELINES §4): the board's column accents.
      Semantic — components never reach for raw danger/warning directly to
-     mean urgency. House rule (PROJECT-MEMORY, 2026-08-27): AMBER means
-     "needs you now" (the logo's dot); RED is reserved for overdue only. */
-  --color-urgency-now: var(--warning);
-  --color-urgency-today: var(--brand-ink);
+     mean urgency. Matches the design export: red=now, amber=today, green=week. */
+  --color-urgency-now: var(--danger);
+  --color-urgency-today: var(--warning);
   --color-urgency-week: var(--success);
   --color-urgency-note: var(--muted);
 }

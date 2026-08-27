@@ -4,6 +4,7 @@ import { ProjectPanel } from "@/components/board/project-panel";
 import { nextStep, ProjectsSection } from "@/components/board/projects-section";
 import { ReviewQueue } from "@/components/board/review-queue";
 import { SideSection } from "@/components/board/side-section";
+import { SideStrip } from "@/components/board/side-strip";
 import { TaskCard } from "@/components/board/task-card";
 import { TaskPanel } from "@/components/board/task-panel";
 import { QuickAdd } from "@/components/capture/quick-add";
@@ -33,17 +34,28 @@ type Panel =
   | { type: "task"; id: string }
   | { type: "project"; id: string }
   | { type: "queue" }
+  | { type: "done" }
   | null;
 
 const LISTEN_SAMPLE =
   "call Piedmont about the caption timeline tomorrow p1 @piedmont";
 
+const WEEKDAY = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
 /**
- * Design pass 3 — the full MonPanache Task Board design: schedule-derived
- * urgency, Projects with step outlines pushed onto the board, Later
- * parking, Done with Reopen, the Review queue, and capture with a live
- * "Reads as" interpretation. All state is ephemeral in the mock phase;
- * mutations become commands and filters move to the URL with the shell.
+ * The MonPanache Task Board, matching the design export: three urgency
+ * columns with Projects / Later / Notes collapsed into side strips,
+ * header chips + date line, review pill, and capture with "Reads as".
+ * All state is ephemeral in the mock phase; mutations become commands
+ * and view state moves to the URL with the real shell.
  */
 export function App() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -55,10 +67,15 @@ export function App() {
     new Set(),
   );
   const [panel, setPanel] = useState<Panel>(null);
-  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  const [open, setOpen] = useState({
+    projects: false,
+    later: false,
+    notes: false,
+  });
   const [capture, setCapture] = useState<string | null>(null);
   const [listening, setListening] = useState(false);
   const [lastDone, setLastDone] = useState<MockTask | null>(null);
+  const [doneToday, setDoneToday] = useState(0);
 
   const today = useMemo(() => new Date(), []);
 
@@ -66,8 +83,20 @@ export function App() {
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, [theme]);
 
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setCapture("");
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   const { columns, later } = groupTasks(tasks, today);
   const done = tasks.filter((task) => task.status === "done");
+  const openCount = tasks.length - done.length;
   const customers = useMemo(
     () => [
       ...new Set(tasks.map((t) => t.customer).filter((c): c is string => !!c)),
@@ -87,12 +116,16 @@ export function App() {
   const markDone = (task: MockTask) => {
     editTask(task.id, { status: "done" });
     setLastDone(task);
+    setDoneToday((count) => count + 1);
     if (panel?.type === "task" && panel.id === task.id) {
       setPanel(null);
     }
   };
 
-  const reopen = (task: MockTask) => editTask(task.id, { status: "todo" });
+  const reopen = (task: MockTask) => {
+    editTask(task.id, { status: "todo" });
+    setDoneToday((count) => Math.max(0, count - 1));
+  };
 
   const saveCapture = () => {
     if (!parsed || parsed.title.length === 0) {
@@ -165,6 +198,9 @@ export function App() {
     panel?.type === "project"
       ? (projects.find((project) => project.id === panel.id) ?? null)
       : null;
+  const selectedTaskId = panel?.type === "task" ? panel.id : null;
+
+  const notesColumn = URGENCY_COLUMNS[3];
 
   return (
     <div className="flex h-full">
@@ -177,63 +213,62 @@ export function App() {
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex items-center gap-3 border-b border-border-soft px-5 py-3">
           <h1 className="text-2xl font-semibold tracking-tight">Board</h1>
-          <p className="hidden text-sm text-muted lg:block">
-            Know what needs you now.
+          <span className="rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium">
+            Open {openCount}
+          </span>
+          <button
+            type="button"
+            onClick={() =>
+              setPanel(panel?.type === "done" ? null : { type: "done" })
+            }
+            className="rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium hover:bg-surface-3"
+          >
+            Done {done.length}
+          </button>
+          <p className="hidden text-sm text-muted md:block">
+            {WEEKDAY[today.getDay()]} — {openCount} open · {doneToday} done
+            today
           </p>
           <div className="ml-auto flex items-center gap-2">
+            {suggested.length > 0 ? (
+              <button
+                type="button"
+                onClick={() => setPanel({ type: "queue" })}
+                className="flex items-center gap-1.5 rounded-full bg-brand/10 px-3 py-1.5 text-sm font-medium text-brand-ink hover:bg-brand/20"
+              >
+                <span aria-hidden className="size-1.5 rounded-full bg-brand" />
+                {suggested.length} suggested — review
+              </button>
+            ) : null}
             <button
               type="button"
               onClick={() => {
                 setCapture("");
                 setListening(true);
               }}
-              className="rounded-lg bg-surface-2 px-3 py-1.5 text-sm font-medium text-brand-ink hover:bg-surface-3"
+              className="rounded-lg border border-border bg-surface px-3 py-1.5 text-sm font-medium hover:bg-surface-2"
             >
               🎙 Log work
             </button>
             <button
               type="button"
               onClick={() => setCapture("")}
-              className="rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+              className="flex items-center gap-2 rounded-lg bg-brand-dark px-3 py-1.5 text-sm font-medium text-white hover:opacity-90"
             >
               ＋ New task
+              <kbd className="rounded bg-white/15 px-1.5 py-0.5 text-[10px]">
+                ⌘K
+              </kbd>
             </button>
-            {suggested.length > 0 ? (
-              <button
-                type="button"
-                onClick={() => setPanel({ type: "queue" })}
-                className="flex items-center gap-1.5 rounded-lg border border-accent/50 bg-accent/10 px-3 py-1.5 text-sm font-medium text-brand-ink hover:bg-accent/20"
-              >
-                Review
-                <span className="flex size-5 items-center justify-center rounded-full bg-accent text-xs font-semibold text-accent-foreground">
-                  {suggested.length}
-                </span>
-              </button>
-            ) : null}
           </div>
         </header>
         <main className="flex min-h-0 flex-1 gap-3 overflow-x-auto p-4">
-          {URGENCY_COLUMNS.map((column) => (
-            <BoardColumn
-              key={column.priority}
-              label={column.label}
-              hint={column.hint}
-              accentClass={COLUMN_ACCENTS[column.priority] ?? "bg-muted"}
-              tasks={columns[column.priority]}
-              today={today}
-              selectedId={panel?.type === "task" ? panel.id : null}
-              onOpenTask={(task) => setPanel({ type: "task", id: task.id })}
-              onMarkDone={markDone}
-            />
-          ))}
-          <div className="flex w-72 shrink-0 flex-col gap-3">
+          {open.projects ? (
             <SideSection
               title="Projects"
               count={projects.length}
-              collapsed={collapsed.projects ?? false}
-              onToggle={() =>
-                setCollapsed((c) => ({ ...c, projects: !c.projects }))
-              }
+              collapsed={false}
+              onToggle={() => setOpen((o) => ({ ...o, projects: false }))}
             >
               <ProjectsSection
                 projects={projects}
@@ -244,17 +279,52 @@ export function App() {
                 onPushStep={pushStep}
               />
             </SideSection>
+          ) : (
+            <SideStrip
+              label="Projects"
+              count={projects.length}
+              dotClass="bg-brand"
+              onExpand={() => setOpen((o) => ({ ...o, projects: true }))}
+            />
+          )}
+          {URGENCY_COLUMNS.slice(0, 3).map((column) => (
+            <BoardColumn
+              key={column.priority}
+              label={column.label}
+              hint={column.hint}
+              accentClass={COLUMN_ACCENTS[column.priority] ?? "bg-muted"}
+              tasks={columns[column.priority]}
+              today={today}
+              selectedId={selectedTaskId}
+              onOpenTask={(task) => setPanel({ type: "task", id: task.id })}
+              onMarkDone={markDone}
+            />
+          ))}
+          {open.notes ? (
+            <BoardColumn
+              label={notesColumn.label}
+              hint={notesColumn.hint}
+              accentClass={COLUMN_ACCENTS.p3 ?? "bg-muted"}
+              tasks={columns.p3}
+              today={today}
+              selectedId={selectedTaskId}
+              onOpenTask={(task) => setPanel({ type: "task", id: task.id })}
+              onMarkDone={markDone}
+            />
+          ) : null}
+          {open.later ? (
             <SideSection
               title="Later"
               count={later.length}
-              collapsed={collapsed.later ?? false}
-              onToggle={() => setCollapsed((c) => ({ ...c, later: !c.later }))}
+              collapsed={false}
+              onToggle={() => setOpen((o) => ({ ...o, later: false }))}
             >
               {later.map((task) => (
                 <TaskCard
                   key={task.id}
                   task={task}
                   today={today}
+                  selected={task.id === selectedTaskId}
                   onOpen={(t) => setPanel({ type: "task", id: t.id })}
                   onMarkDone={markDone}
                 />
@@ -266,37 +336,24 @@ export function App() {
                 </p>
               ) : null}
             </SideSection>
-            <SideSection
-              title="Done"
-              count={done.length}
-              collapsed={collapsed.done ?? true}
-              onToggle={() =>
-                setCollapsed((c) => ({ ...c, done: !(c.done ?? true) }))
-              }
-            >
-              {done.map((task) => (
-                <div
-                  key={task.id}
-                  className="flex items-center gap-2 rounded-xl border border-border-soft bg-surface p-2.5"
-                >
-                  <span className="min-w-0 flex-1 truncate text-sm text-muted line-through">
-                    {task.title}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => reopen(task)}
-                    className="shrink-0 text-xs font-medium text-brand-ink hover:underline"
-                  >
-                    Reopen
-                  </button>
-                </div>
-              ))}
-              {done.length === 0 ? (
-                <p className="rounded-xl border border-dashed border-border-soft p-4 text-center text-xs text-muted">
-                  Nothing completed yet — go knock something out.
-                </p>
-              ) : null}
-            </SideSection>
+          ) : null}
+          <div className="ml-auto flex min-h-0 flex-col gap-3">
+            {open.later ? null : (
+              <SideStrip
+                label="Later"
+                count={later.length}
+                dotClass="bg-urgency-week"
+                onExpand={() => setOpen((o) => ({ ...o, later: true }))}
+              />
+            )}
+            {open.notes ? null : (
+              <SideStrip
+                label="Notes"
+                count={columns.p3.length}
+                dotClass="bg-urgency-note"
+                onExpand={() => setOpen((o) => ({ ...o, notes: true }))}
+              />
+            )}
           </div>
         </main>
       </div>
@@ -326,6 +383,49 @@ export function App() {
           onClose={() => setPanel(null)}
         />
       ) : null}
+      {panel?.type === "done" ? (
+        <aside
+          aria-label="Done"
+          className="flex w-90 shrink-0 flex-col border-l border-border-soft bg-surface"
+        >
+          <header className="flex items-center gap-2 border-b border-border-soft px-4 py-3">
+            <h2 className="text-sm font-semibold tracking-tight">Done</h2>
+            <span className="text-xs text-muted">{done.length}</span>
+            <button
+              type="button"
+              onClick={() => setPanel(null)}
+              aria-label="Close panel"
+              className="ml-auto flex size-7 items-center justify-center rounded-lg text-muted hover:bg-surface-2"
+            >
+              ✕
+            </button>
+          </header>
+          <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-3">
+            {done.map((task) => (
+              <div
+                key={task.id}
+                className="flex items-center gap-2 rounded-xl border border-border-soft bg-surface p-2.5"
+              >
+                <span className="min-w-0 flex-1 truncate text-sm text-muted line-through">
+                  {task.title}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => reopen(task)}
+                  className="shrink-0 text-xs font-medium text-brand-ink hover:underline"
+                >
+                  Reopen
+                </button>
+              </div>
+            ))}
+            {done.length === 0 ? (
+              <p className="rounded-xl border border-dashed border-border-soft p-4 text-center text-xs text-muted">
+                Nothing completed yet — go knock something out.
+              </p>
+            ) : null}
+          </div>
+        </aside>
+      ) : null}
       {capture !== null ? (
         <QuickAdd
           text={capture}
@@ -336,7 +436,6 @@ export function App() {
             setListening(false);
           }}
           onToggleListening={() => {
-            // Mock voice capture: "stopping" drops the sample utterance in.
             if (listening) {
               setCapture(LISTEN_SAMPLE);
             }
