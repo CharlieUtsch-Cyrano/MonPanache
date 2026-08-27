@@ -57,8 +57,11 @@ Gmail ingestion, then Zoom, then backfill, then automation.
 4. **RLS from day one.** Every table gets row-level security in the same
    migration that creates it. *Why:* retrofitting RLS is how cross-user leaks
    happen; the Tools repo proved unenforced rules do not count.
-5. **Product name: Cyrano-Task-Manager** (npm package `cyrano-task-manager`).
-   One name in docs, code, and conversation.
+5. **Names (updated 2026-08-27, Charlie):** the product is **Panache** —
+   tagline *"Know what needs you now. Automate what repeats."* The repo and
+   npm package stay `Cyrano-Task-Manager` / `cyrano-task-manager`. Panache
+   is what users (and docs) call the product; Cyrano-Task-Manager names the
+   repo. No third name, ever.
 6. **Agent sessions: propose → gate → bolt; depth matches the work.**
    Corrections become standing rules. Same model as the production repo; do
    not install a second agent OS.

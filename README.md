@@ -1,9 +1,16 @@
-# Cyrano-Task-Manager
+# Panache
 
-An internal Cyrano tool for managing **projects and tasks** — built
-framework-first, modeled on the CyranoApp-AI-Production operating system.
-The playbooks land before the product so we can code fast *without* growing
-another monolith.
+**Know what needs you now. Automate what repeats.**
+
+Panache gathers the work flying at you — from customer calls, email, and
+your own head — sorts it into buckets, ranks what deserves attention when,
+and learns your patterns until the routine runs itself. The name is
+Cyrano's: *"mon panache"* — grace under pressure, kept to the end.
+
+This repo (`Cyrano-Task-Manager`) is Panache's home — an internal Cyrano
+tool built framework-first, modeled on the CyranoApp-AI-Production
+operating system. The playbooks land before the product so we can code
+fast *without* growing another monolith.
 
 This is an **internal tool**, not customer production. The ceremony is
 lighter than CyranoApp-AI-Production, but the discipline is the same:

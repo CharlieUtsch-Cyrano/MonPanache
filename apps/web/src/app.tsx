@@ -36,7 +36,10 @@ export function App() {
         <header className="flex items-center gap-3 border-b border-border-soft px-5 py-3">
           <h1 className="text-2xl font-semibold tracking-tight">Board</h1>
           <p className="text-sm text-muted">
-            Tuesday — mock data, design pass 1
+            Wednesday — mock data, design pass 1
+          </p>
+          <p className="ml-auto hidden text-sm text-muted md:block">
+            Know what needs you now.
           </p>
         </header>
         <main className="flex min-h-0 flex-1 gap-3 overflow-x-auto p-4">

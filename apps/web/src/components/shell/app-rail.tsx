@@ -15,10 +15,10 @@ export function AppRail({
       className="flex w-14 shrink-0 flex-col items-center gap-2 border-r border-border-soft bg-surface py-3"
     >
       <span
-        title="Cyrano-Task-Manager"
+        title="Panache — know what needs you now"
         className="flex size-9 items-center justify-center rounded-xl bg-brand-dark text-sm font-bold text-white"
       >
-        CT
+        P
       </span>
       <button
         type="button"
