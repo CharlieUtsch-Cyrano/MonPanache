@@ -48,18 +48,20 @@
   --color-success: var(--success);
 
   /* Urgency tokens (DESIGN-GUIDELINES §4): the board's column accents.
-     Semantic — components never reach for raw danger/warning directly
-     to mean urgency. */
-  --color-urgency-now: var(--danger);
-  --color-urgency-today: var(--warning);
+     Semantic — components never reach for raw danger/warning directly to
+     mean urgency. House rule (PROJECT-MEMORY, 2026-08-27): AMBER means
+     "needs you now" (the logo's dot); RED is reserved for overdue only. */
+  --color-urgency-now: var(--warning);
+  --color-urgency-today: var(--brand-ink);
   --color-urgency-week: var(--success);
   --color-urgency-note: var(--muted);
 }
 
-/* Brand color slots — Cyrano palette. */
+/* Brand color slots — MonPanache palette (indigo = knowledge/control,
+   amber accent = "now"). Distinct from the Cyrano cyan/navy on purpose. */
 :root {
-  --brand-primary: #00c4d3; /* light brand */
-  --brand-secondary: #001e45; /* dark brand */
+  --brand-primary: #818cf8; /* light indigo */
+  --brand-secondary: #312e81; /* deep indigo (the logo's M and P) */
 }
 
 /* ============ LIGHT THEME (default) ============ */
@@ -77,11 +79,11 @@
   --muted: oklch(0.5 0.015 270);
   --muted-foreground: oklch(0.42 0.018 270);
 
-  --primary: var(--brand-primary, oklch(0.58 0.18 255));
+  --primary: oklch(0.45 0.21 275); /* deep indigo — AA on white */
   --primary-foreground: oklch(0.99 0.005 270);
 
-  --accent: var(--brand-secondary, oklch(0.62 0.13 185));
-  --accent-foreground: oklch(0.99 0.005 270);
+  --accent: oklch(0.68 0.15 65); /* amber — the "now" accent */
+  --accent-foreground: oklch(0.18 0.018 270);
 
   --warning: oklch(0.7 0.16 75);
   --danger: oklch(0.6 0.22 25);
@@ -106,10 +108,10 @@
   --muted: oklch(0.7 0.015 270);
   --muted-foreground: oklch(0.62 0.02 270);
 
-  --primary: var(--brand-primary, oklch(0.72 0.16 245));
+  --primary: var(--brand-primary, oklch(0.72 0.14 280)); /* light indigo */
   --primary-foreground: oklch(0.18 0.018 270);
 
-  --accent: var(--brand-secondary, oklch(0.78 0.13 185));
+  --accent: oklch(0.82 0.14 80); /* amber, brightened for dark surfaces */
   --accent-foreground: oklch(0.18 0.018 270);
 
   --warning: oklch(0.82 0.14 80);

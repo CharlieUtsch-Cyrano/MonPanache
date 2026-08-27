@@ -8,11 +8,15 @@ export function BoardColumn({
   hint,
   accentClass,
   tasks,
+  onOpenTask,
+  onMarkDone,
 }: {
   label: string;
   hint: string;
   accentClass: string;
   tasks: MockTask[];
+  onOpenTask: (task: MockTask) => void;
+  onMarkDone: (task: MockTask) => void;
 }) {
   return (
     <section
@@ -27,7 +31,12 @@ export function BoardColumn({
       </header>
       <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-1">
         {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} />
+          <TaskCard
+            key={task.id}
+            task={task}
+            onOpen={onOpenTask}
+            onMarkDone={onMarkDone}
+          />
         ))}
         {tasks.length === 0 ? (
           <p className="rounded-xl border border-dashed border-border-soft p-4 text-center text-xs text-muted">

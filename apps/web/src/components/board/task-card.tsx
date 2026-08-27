@@ -18,9 +18,13 @@ const STATUS_PILLS: Partial<Record<MockTask["status"], string>> = {
  */
 export function TaskCard({
   task,
+  onOpen,
+  onMarkDone,
   className,
 }: {
   task: MockTask;
+  onOpen: (task: MockTask) => void;
+  onMarkDone: (task: MockTask) => void;
   className?: string;
 }) {
   const source = SOURCE_BADGES[task.source];
@@ -57,9 +61,22 @@ export function TaskCard({
         ) : null}
       </div>
 
-      <h3 className="mt-1.5 line-clamp-2 min-h-10 text-sm font-medium leading-5">
-        {task.title}
-      </h3>
+      <div className="mt-1.5 flex items-start gap-2">
+        <button
+          type="button"
+          onClick={() => onMarkDone(task)}
+          aria-label={`Mark done: ${task.title}`}
+          title="Mark done"
+          className="mt-0.5 size-4 shrink-0 rounded-full border-2 border-border hover:border-success hover:bg-success/20"
+        />
+        <button
+          type="button"
+          onClick={() => onOpen(task)}
+          className="line-clamp-2 min-h-10 flex-1 text-left text-sm font-medium leading-5 hover:text-brand-ink"
+        >
+          {task.title}
+        </button>
+      </div>
 
       <div className="mt-2 flex min-h-6 flex-nowrap items-center gap-1.5 overflow-hidden">
         <span className="whitespace-nowrap rounded-full bg-surface-2 px-2 py-0.5 text-[11px] text-muted-foreground">

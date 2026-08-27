@@ -10,6 +10,7 @@ export type MockTask = {
   id: string;
   title: string;
   customer?: string;
+  project?: string;
   bucket: string;
   source: TaskSource;
   priority: TaskPriority;
@@ -24,6 +25,7 @@ export type MockTask = {
 export const MOCK_TASKS: MockTask[] = [
   {
     id: "t-01",
+    project: "Piedmont captions",
     title: "Send corrected caption file to Piedmont before their 2pm review",
     customer: "Piedmont Health",
     bucket: "Caption edits",
@@ -36,6 +38,7 @@ export const MOCK_TASKS: MockTask[] = [
   },
   {
     id: "t-02",
+    project: "Renewals",
     title: "Reply to Ottumwa about the renewal quote they flagged",
     customer: "Ottumwa Regional",
     bucket: "Contract / billing",
@@ -69,6 +72,7 @@ export const MOCK_TASKS: MockTask[] = [
   },
   {
     id: "t-05",
+    project: "Piedmont onboarding",
     title: "Send Piedmont the onboarding checklist for their second team",
     customer: "Piedmont Health",
     bucket: "Onboarding",
@@ -81,6 +85,7 @@ export const MOCK_TASKS: MockTask[] = [
   },
   {
     id: "t-06",
+    project: "St. Luke's demo",
     title: "Confirm Thursday's demo time with the St. Luke's team",
     customer: "St. Luke's",
     bucket: "Demo prep",
@@ -101,6 +106,7 @@ export const MOCK_TASKS: MockTask[] = [
   },
   {
     id: "t-08",
+    project: "Mercy campaign",
     title: "Review Mercy's edited script and leave comments",
     customer: "Mercy General",
     bucket: "Content review",
@@ -113,6 +119,7 @@ export const MOCK_TASKS: MockTask[] = [
   },
   {
     id: "t-09",
+    project: "Q3 reporting",
     title: "Prepare Q3 usage report for Ottumwa's stakeholder meeting",
     customer: "Ottumwa Regional",
     bucket: "Reporting",
@@ -125,6 +132,7 @@ export const MOCK_TASKS: MockTask[] = [
   },
   {
     id: "t-10",
+    project: "Renewals",
     title: "Chase the signed SOW from the St. Luke's procurement office",
     customer: "St. Luke's",
     bucket: "Contract / billing",
@@ -135,6 +143,7 @@ export const MOCK_TASKS: MockTask[] = [
   },
   {
     id: "t-11",
+    project: "St. Luke's demo",
     title: "Update the demo environment with the new caption styles",
     bucket: "Demo prep",
     source: "manual",

@@ -84,6 +84,18 @@ Gmail ingestion, then Zoom, then backfill, then automation.
     short email/transcript excerpts as context. The hard **no-PHI** line
     stays. COMPLIANCE.md revised same change.
 
+12. **MonPanache palette (locked 2026-08-27, Charlie):** indigo + amber,
+    matching the MP logo — deliberately distinct from Cyrano cyan/navy.
+    Brand slots: light indigo `#818cf8` / deep indigo `#312e81`. **Amber
+    means "needs you now"** (the logo's dot); **red is reserved for
+    overdue only.** Urgency accents: now=amber, today=indigo, week=green,
+    note=gray. Logo assets live in `apps/web/public/`.
+13. **Design source of truth:** Charlie's claude.ai/design project ("Task
+    board design review", exported 2026-08-27) seeds the UI — ported one
+    way, translated into tokens/Tailwind components, never pasted inline
+    styles. Screens: Task Board (ported in pass 2), Review queue (Bolt B),
+    Login/Settings/Analysis (Bolt C, after auth/backend).
+
 ## Open (named later, not architecture)
 
 - **Backend (decide before the first migration — blocks Bolt 3).** Charlie

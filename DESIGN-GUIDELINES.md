@@ -57,12 +57,14 @@ never hard-coded hex. Every screen works in **light and dark**.
 | `border`, `border-soft` | Dividers and outlines |
 | `muted`, `muted-foreground` | Secondary text |
 | `primary` / `accent` | Primary actions / secondary emphasis |
-| `brand` / `brand-dark` / `brand-ink` | Cyrano brand pair; **`brand-ink` for anything you read** |
-| `warning`, `danger`, `success` | Status — also the palette for task statuses and priorities |
+| `brand` / `brand-dark` / `brand-ink` | MonPanache indigo pair; **`brand-ink` for anything you read** |
+| `warning`, `danger`, `success` | Status colors |
+| `urgency-now/today/week/note` | The board's column accents (amber / indigo / green / gray) |
 
-Task-domain rule: **status and priority get their own semantic tokens**
-(e.g. `status-blocked`, `priority-p0`) defined once in `styles.css` — never
-ad-hoc reds and yellows per component.
+Task-domain rules: **urgency gets its own semantic tokens** defined once in
+`styles.css` — never ad-hoc colors per component. **Amber means "needs you
+now"** (the logo's dot); **red is reserved for overdue only** — never use
+red for mere urgency, never use amber for lateness.
 
 ## 5. Typography
 
