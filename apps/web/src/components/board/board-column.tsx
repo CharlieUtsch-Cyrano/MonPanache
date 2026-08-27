@@ -16,6 +16,7 @@ export function BoardColumn({
   onDragStart,
   onDragEnd,
   onDropTask,
+  onCollapse,
 }: {
   label: string;
   hint: string;
@@ -30,6 +31,8 @@ export function BoardColumn({
   onDragEnd?: () => void;
   /** Drop into the column body (append) or onto a card (insert). */
   onDropTask?: (target: MockTask | null, before: boolean) => void;
+  /** Collapsible columns (Notes) show a chevron, per the design. */
+  onCollapse?: () => void;
 }) {
   return (
     <section
@@ -41,6 +44,17 @@ export function BoardColumn({
         <h2 className="text-sm font-semibold tracking-tight">{label}</h2>
         <span className="text-xs text-muted">{tasks.length}</span>
         <span className="ml-auto truncate text-[11px] text-muted">{hint}</span>
+        {onCollapse ? (
+          <button
+            type="button"
+            onClick={onCollapse}
+            aria-label={`Collapse ${label.toLowerCase()}`}
+            title={`Collapse ${label.toLowerCase()}`}
+            className="flex size-5 shrink-0 items-center justify-center rounded-md text-xs text-muted hover:bg-surface-3"
+          >
+            »
+          </button>
+        ) : null}
       </header>
       {/* biome-ignore lint/a11y/noStaticElementInteractions: drop target only — keyboard users move tasks via the task panel's schedule/urgency fields */}
       <div

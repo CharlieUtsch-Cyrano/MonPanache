@@ -305,8 +305,9 @@ export function App() {
             <SideSection
               title="Projects"
               count={projects.length}
-              collapsed={false}
-              onToggle={() => setOpen((o) => ({ ...o, projects: false }))}
+              hint="internal, ongoing"
+              side="left"
+              onCollapse={() => setOpen((o) => ({ ...o, projects: false }))}
             >
               <ProjectsSection
                 projects={projects}
@@ -321,7 +322,6 @@ export function App() {
             <SideStrip
               label="Projects"
               count={projects.length}
-              dotClass="bg-brand"
               onExpand={() => setOpen((o) => ({ ...o, projects: true }))}
             />
           )}
@@ -358,14 +358,16 @@ export function App() {
               onDragStart={(task) => setDragId(task.id)}
               onDragEnd={() => setDragId(null)}
               onDropTask={(target, before) => dropTask("p3", target, before)}
+              onCollapse={() => setOpen((o) => ({ ...o, notes: false }))}
             />
           ) : null}
           {open.later ? (
             <SideSection
               title="Later"
               count={later.length}
-              collapsed={false}
-              onToggle={() => setOpen((o) => ({ ...o, later: false }))}
+              hint="scheduled out"
+              side="right"
+              onCollapse={() => setOpen((o) => ({ ...o, later: false }))}
             >
               {later.map((task) => (
                 <TaskCard
@@ -385,12 +387,12 @@ export function App() {
               ) : null}
             </SideSection>
           ) : null}
-          <div className="ml-auto flex min-h-0 flex-col gap-3">
+          <div className="ml-auto flex min-h-0 flex-col gap-2">
             {open.later ? null : (
               <SideStrip
                 label="Later"
                 count={later.length}
-                dotClass="bg-urgency-week"
+                fill
                 onExpand={() => setOpen((o) => ({ ...o, later: true }))}
               />
             )}
@@ -398,7 +400,7 @@ export function App() {
               <SideStrip
                 label="Notes"
                 count={columns.p3.length}
-                dotClass="bg-urgency-note"
+                fill
                 onExpand={() => setOpen((o) => ({ ...o, notes: true }))}
               />
             )}

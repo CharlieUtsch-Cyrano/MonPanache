@@ -1,16 +1,17 @@
 import { cn } from "@/lib/cn";
 
-/** Collapsed section as a thin vertical strip (design: "Projects · 5"
- * written sideways with the section's dot). Click to expand. */
+/** Collapsed section as a thin vertical strip, matching the design:
+ * 40px wide, teal dot, sideways 12px label. Click to expand. */
 export function SideStrip({
   label,
   count,
-  dotClass,
+  fill = false,
   onExpand,
 }: {
   label: string;
   count: number;
-  dotClass: string;
+  /** Right-edge strips stretch to share the full height (design flex:1). */
+  fill?: boolean;
   onExpand: () => void;
 }) {
   return (
@@ -18,14 +19,14 @@ export function SideStrip({
       type="button"
       onClick={onExpand}
       aria-label={`Show ${label} (${count})`}
-      className="flex min-h-0 w-9 flex-col items-center gap-2 rounded-2xl bg-surface-2/60 py-3 hover:bg-surface-2"
+      className={cn(
+        "flex w-10 shrink-0 flex-col items-center gap-2 rounded-2xl bg-surface-2/60 py-3.5 text-muted hover:bg-surface-2",
+        fill ? "flex-1" : "",
+      )}
     >
+      <span aria-hidden className="size-2 shrink-0 rounded-full bg-brand" />
       <span
-        aria-hidden
-        className={cn("size-2 shrink-0 rounded-full", dotClass)}
-      />
-      <span
-        className="text-xs font-medium text-muted-foreground"
+        className="text-xs font-semibold tracking-wide"
         style={{ writingMode: "vertical-rl" }}
       >
         {label} · {count}
