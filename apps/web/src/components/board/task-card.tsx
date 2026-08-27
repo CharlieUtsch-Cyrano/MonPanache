@@ -1,5 +1,6 @@
 import { cn } from "@/lib/cn";
 import type { MockTask, TaskSource } from "@/lib/mock-tasks";
+import { daysUntil, dueLabel } from "@/lib/schedule";
 
 const SOURCE_BADGES: Record<TaskSource, { glyph: string; label: string }> = {
   manual: { glyph: "✎", label: "Added manually" },
@@ -18,17 +19,20 @@ const STATUS_PILLS: Partial<Record<MockTask["status"], string>> = {
  */
 export function TaskCard({
   task,
+  today,
   onOpen,
   onMarkDone,
   className,
 }: {
   task: MockTask;
+  today: Date;
   onOpen: (task: MockTask) => void;
   onMarkDone: (task: MockTask) => void;
   className?: string;
 }) {
   const source = SOURCE_BADGES[task.source];
   const statusPill = STATUS_PILLS[task.status];
+  const overdue = task.dueDate ? daysUntil(task.dueDate, today) < 0 : false;
   return (
     <article
       className={cn(
@@ -49,14 +53,14 @@ export function TaskCard({
         <span className="truncate text-xs font-medium text-brand-ink">
           {task.customer ?? "Internal"}
         </span>
-        {task.dueLabel ? (
+        {task.dueDate ? (
           <span
             className={cn(
               "ml-auto shrink-0 whitespace-nowrap text-xs",
-              task.overdue ? "font-semibold text-danger" : "text-muted",
+              overdue ? "font-semibold text-danger" : "text-muted",
             )}
           >
-            {task.dueLabel}
+            {dueLabel(task.dueDate, today)}
           </span>
         ) : null}
       </div>

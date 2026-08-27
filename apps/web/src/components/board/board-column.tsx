@@ -8,6 +8,7 @@ export function BoardColumn({
   hint,
   accentClass,
   tasks,
+  today,
   onOpenTask,
   onMarkDone,
 }: {
@@ -15,6 +16,7 @@ export function BoardColumn({
   hint: string;
   accentClass: string;
   tasks: MockTask[];
+  today: Date;
   onOpenTask: (task: MockTask) => void;
   onMarkDone: (task: MockTask) => void;
 }) {
@@ -34,6 +36,7 @@ export function BoardColumn({
           <TaskCard
             key={task.id}
             task={task}
+            today={today}
             onOpen={onOpenTask}
             onMarkDone={onMarkDone}
           />
