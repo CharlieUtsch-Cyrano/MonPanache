@@ -22,6 +22,7 @@ import {
   MOCK_TASKS,
 } from "@/lib/mock-tasks";
 import { parseCapture } from "@/lib/parse-capture";
+import { boardSlot } from "@/lib/schedule";
 
 const COLUMN_ACCENTS: Record<string, string> = {
   p0: "bg-urgency-now",
@@ -76,6 +77,7 @@ export function App() {
   const [listening, setListening] = useState(false);
   const [lastDone, setLastDone] = useState<MockTask | null>(null);
   const [doneToday, setDoneToday] = useState(0);
+  const [dragId, setDragId] = useState<string | null>(null);
 
   const today = useMemo(() => new Date(), []);
 
@@ -174,6 +176,42 @@ export function App() {
       ...current,
     ]);
     setPushedStepIds(new Set([...pushedStepIds, step.id]));
+  };
+
+  /** The design's drop semantics: moving across columns adopts that
+   * column's priority and CLEARS the schedule (manual placement);
+   * dropping on a card inserts before/after it. */
+  const dropTask = (
+    columnPriority: MockTask["priority"],
+    target: MockTask | null,
+    before: boolean,
+  ) => {
+    if (!dragId || dragId === target?.id) {
+      setDragId(null);
+      return;
+    }
+    setTasks((current) => {
+      const dragged = current.find((task) => task.id === dragId);
+      if (!dragged) {
+        return current;
+      }
+      const movedAcross = boardSlot(dragged, today) !== columnPriority;
+      const updated: MockTask = {
+        ...dragged,
+        priority: columnPriority,
+        dueDate: movedAcross ? undefined : dragged.dueDate,
+        dueTime: movedAcross ? undefined : dragged.dueTime,
+      };
+      const rest = current.filter((task) => task.id !== dragId);
+      const index = target ? rest.findIndex((t) => t.id === target.id) : -1;
+      if (index === -1) {
+        rest.push(updated);
+      } else {
+        rest.splice(before ? index : index + 1, 0, updated);
+      }
+      return rest;
+    });
+    setDragId(null);
   };
 
   const toggleStep = (projectId: string, stepId: string) =>
@@ -296,8 +334,14 @@ export function App() {
               tasks={columns[column.priority]}
               today={today}
               selectedId={selectedTaskId}
+              draggingId={dragId}
               onOpenTask={(task) => setPanel({ type: "task", id: task.id })}
               onMarkDone={markDone}
+              onDragStart={(task) => setDragId(task.id)}
+              onDragEnd={() => setDragId(null)}
+              onDropTask={(target, before) =>
+                dropTask(column.priority, target, before)
+              }
             />
           ))}
           {open.notes ? (
@@ -308,8 +352,12 @@ export function App() {
               tasks={columns.p3}
               today={today}
               selectedId={selectedTaskId}
+              draggingId={dragId}
               onOpenTask={(task) => setPanel({ type: "task", id: task.id })}
               onMarkDone={markDone}
+              onDragStart={(task) => setDragId(task.id)}
+              onDragEnd={() => setDragId(null)}
+              onDropTask={(target, before) => dropTask("p3", target, before)}
             />
           ) : null}
           {open.later ? (

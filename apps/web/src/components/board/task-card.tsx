@@ -22,15 +22,24 @@ export function TaskCard({
   task,
   today,
   selected = false,
+  dragging = false,
   onOpen,
   onMarkDone,
+  onDragStart,
+  onDragEnd,
+  onDropOnCard,
   className,
 }: {
   task: MockTask;
   today: Date;
   selected?: boolean;
+  dragging?: boolean;
   onOpen: (task: MockTask) => void;
   onMarkDone: (task: MockTask) => void;
+  onDragStart?: (task: MockTask) => void;
+  onDragEnd?: () => void;
+  /** Drop another card onto this one: insert before/after (design DnD). */
+  onDropOnCard?: (target: MockTask, before: boolean) => void;
   className?: string;
 }) {
   const source = SOURCE_BADGES[task.source];
@@ -41,9 +50,32 @@ export function TaskCard({
     : null;
   return (
     <article
+      draggable={!!onDragStart}
+      onDragStart={(event) => {
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", task.id);
+        onDragStart?.(task);
+      }}
+      onDragEnd={onDragEnd}
+      onDragOver={(event) => {
+        if (onDropOnCard) {
+          event.preventDefault();
+          event.dataTransfer.dropEffect = "move";
+        }
+      }}
+      onDrop={(event) => {
+        if (onDropOnCard) {
+          event.preventDefault();
+          event.stopPropagation();
+          const rect = event.currentTarget.getBoundingClientRect();
+          onDropOnCard(task, event.clientY < rect.top + rect.height / 2);
+        }
+      }}
       className={cn(
         "rounded-3xl border bg-surface p-3 shadow-xs",
         "transition-colors hover:border-border",
+        onDragStart ? "cursor-grab" : "",
+        dragging ? "opacity-40" : "",
         selected ? "border-brand-ink" : "border-border-soft",
         className,
       )}

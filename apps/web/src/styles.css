@@ -56,11 +56,11 @@
   --color-urgency-note: var(--muted);
 }
 
-/* Brand color slots — MonPanache palette (indigo = knowledge/control,
-   amber accent = "now"). Distinct from the Cyrano cyan/navy on purpose. */
+/* Brand color slots — matched to the design export (Cyrano pair): teal
+   accents, deep navy fills. Logo will be regenerated to match. */
 :root {
-  --brand-primary: #818cf8; /* light indigo */
-  --brand-secondary: #312e81; /* deep indigo (the logo's M and P) */
+  --brand-primary: #00c4d3; /* teal */
+  --brand-secondary: #001e45; /* deep navy */
 }
 
 /* ============ LIGHT THEME (default) ============ */
@@ -78,7 +78,7 @@
   --muted: oklch(0.5 0.015 270);
   --muted-foreground: oklch(0.42 0.018 270);
 
-  --primary: oklch(0.45 0.21 275); /* deep indigo — AA on white */
+  --primary: var(--brand-secondary); /* deep navy — AA on white */
   --primary-foreground: oklch(0.99 0.005 270);
 
   --accent: oklch(0.68 0.15 65); /* amber — the "now" accent */
@@ -107,7 +107,7 @@
   --muted: oklch(0.7 0.015 270);
   --muted-foreground: oklch(0.62 0.02 270);
 
-  --primary: var(--brand-primary, oklch(0.72 0.14 280)); /* light indigo */
+  --primary: var(--brand-primary, oklch(0.72 0.12 200)); /* teal */
   --primary-foreground: oklch(0.18 0.018 270);
 
   --accent: oklch(0.82 0.14 80); /* amber, brightened for dark surfaces */

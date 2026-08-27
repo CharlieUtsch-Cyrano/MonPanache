@@ -10,8 +10,12 @@ export function BoardColumn({
   tasks,
   today,
   selectedId,
+  draggingId,
   onOpenTask,
   onMarkDone,
+  onDragStart,
+  onDragEnd,
+  onDropTask,
 }: {
   label: string;
   hint: string;
@@ -19,8 +23,13 @@ export function BoardColumn({
   tasks: MockTask[];
   today: Date;
   selectedId?: string | null;
+  draggingId?: string | null;
   onOpenTask: (task: MockTask) => void;
   onMarkDone: (task: MockTask) => void;
+  onDragStart?: (task: MockTask) => void;
+  onDragEnd?: () => void;
+  /** Drop into the column body (append) or onto a card (insert). */
+  onDropTask?: (target: MockTask | null, before: boolean) => void;
 }) {
   return (
     <section
@@ -33,15 +42,34 @@ export function BoardColumn({
         <span className="text-xs text-muted">{tasks.length}</span>
         <span className="ml-auto truncate text-[11px] text-muted">{hint}</span>
       </header>
-      <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-1">
+      {/* biome-ignore lint/a11y/noStaticElementInteractions: drop target only — keyboard users move tasks via the task panel's schedule/urgency fields */}
+      <div
+        className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-1"
+        onDragOver={(event) => {
+          if (onDropTask) {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+          }
+        }}
+        onDrop={(event) => {
+          if (onDropTask) {
+            event.preventDefault();
+            onDropTask(null, false);
+          }
+        }}
+      >
         {tasks.map((task) => (
           <TaskCard
             key={task.id}
             task={task}
             today={today}
             selected={task.id === selectedId}
+            dragging={task.id === draggingId}
             onOpen={onOpenTask}
             onMarkDone={onMarkDone}
+            onDragStart={onDragStart}
+            onDragEnd={onDragEnd}
+            onDropOnCard={onDropTask}
           />
         ))}
         {tasks.length === 0 ? (
