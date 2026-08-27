@@ -77,7 +77,7 @@ See PROJECT-MEMORY.md for the full log. Short list:
 - Framework modeled on CyranoApp-AI-Production; ceremony scaled to an
   internal tool.
 - One data layer (`lib/data/`) with a documented seam to a BFF later.
-- The product is **Panache**; the repo/package stay `Cyrano-Task-Manager`.
+- The product is **MonPanache**; the repo/package stay `Cyrano-Task-Manager`.
   One name each — do not introduce a third.
 
 ## Do NOT "fix" these (they are intentional)

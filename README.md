@@ -1,13 +1,14 @@
-# Panache
+# MonPanache
 
 **Know what needs you now. Automate what repeats.**
 
-Panache gathers the work flying at you — from customer calls, email, and
+MonPanache gathers the work flying at you — from customer calls, email, and
 your own head — sorts it into buckets, ranks what deserves attention when,
 and learns your patterns until the routine runs itself. The name is
-Cyrano's: *"mon panache"* — grace under pressure, kept to the end.
+Cyrano's dying line: *"mon panache"* — the part of your work that is
+irreducibly yours. The tool automates everything that isn't.
 
-This repo (`Cyrano-Task-Manager`) is Panache's home — an internal Cyrano
+This repo (`Cyrano-Task-Manager`) is MonPanache's home — an internal Cyrano
 tool built framework-first, modeled on the CyranoApp-AI-Production
 operating system. The playbooks land before the product so we can code
 fast *without* growing another monolith.

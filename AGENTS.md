@@ -61,7 +61,7 @@ trees at runtime and never point this app at their databases.
 - Framework modeled on CyranoApp-AI-Production; ceremony scaled to an
   internal tool.
 - One data layer (`lib/data/`) with a documented seam to a BFF later.
-- The product is **Panache**; the repo/package stay `Cyrano-Task-Manager`.
+- The product is **MonPanache**; the repo/package stay `Cyrano-Task-Manager`.
 
 ## Do not “fix”
 
