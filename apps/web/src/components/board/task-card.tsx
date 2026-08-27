@@ -20,12 +20,14 @@ const STATUS_PILLS: Partial<Record<MockTask["status"], string>> = {
 export function TaskCard({
   task,
   today,
+  selected = false,
   onOpen,
   onMarkDone,
   className,
 }: {
   task: MockTask;
   today: Date;
+  selected?: boolean;
   onOpen: (task: MockTask) => void;
   onMarkDone: (task: MockTask) => void;
   className?: string;
@@ -36,8 +38,9 @@ export function TaskCard({
   return (
     <article
       className={cn(
-        "rounded-xl border border-border-soft bg-surface p-3 shadow-xs",
+        "rounded-3xl border bg-surface p-3 shadow-xs",
         "transition-colors hover:border-border",
+        selected ? "border-brand-ink" : "border-border-soft",
         className,
       )}
     >
@@ -65,18 +68,18 @@ export function TaskCard({
         ) : null}
       </div>
 
-      <div className="mt-1.5 flex items-start gap-2">
+      <div className="mt-1 flex items-start gap-2">
         <button
           type="button"
           onClick={() => onMarkDone(task)}
           aria-label={`Mark done: ${task.title}`}
           title="Mark done"
-          className="mt-0.5 size-4 shrink-0 rounded-full border-2 border-border hover:border-success hover:bg-success/20"
+          className="mt-0.5 size-5 shrink-0 rounded-full border-[1.5px] border-border hover:border-success hover:bg-success/20"
         />
         <button
           type="button"
           onClick={() => onOpen(task)}
-          className="line-clamp-2 min-h-10 flex-1 text-left text-sm font-medium leading-5 hover:text-brand-ink"
+          className="line-clamp-2 min-h-[34px] flex-1 text-left text-xs font-medium leading-[17px] hover:text-brand-ink"
         >
           {task.title}
         </button>

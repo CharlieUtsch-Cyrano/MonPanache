@@ -9,6 +9,7 @@ export function BoardColumn({
   accentClass,
   tasks,
   today,
+  selectedId,
   onOpenTask,
   onMarkDone,
 }: {
@@ -17,6 +18,7 @@ export function BoardColumn({
   accentClass: string;
   tasks: MockTask[];
   today: Date;
+  selectedId?: string | null;
   onOpenTask: (task: MockTask) => void;
   onMarkDone: (task: MockTask) => void;
 }) {
@@ -37,6 +39,7 @@ export function BoardColumn({
             key={task.id}
             task={task}
             today={today}
+            selected={task.id === selectedId}
             onOpen={onOpenTask}
             onMarkDone={onMarkDone}
           />

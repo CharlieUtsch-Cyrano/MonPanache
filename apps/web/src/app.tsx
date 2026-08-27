@@ -221,6 +221,7 @@ export function App() {
               accentClass={COLUMN_ACCENTS[column.priority] ?? "bg-muted"}
               tasks={columns[column.priority]}
               today={today}
+              selectedId={panel?.type === "task" ? panel.id : null}
               onOpenTask={(task) => setPanel({ type: "task", id: task.id })}
               onMarkDone={markDone}
             />

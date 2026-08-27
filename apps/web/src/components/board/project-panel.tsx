@@ -15,7 +15,7 @@ export function ProjectPanel({
   return (
     <aside
       aria-label="Project detail"
-      className="flex w-88 shrink-0 flex-col border-l border-border-soft bg-surface"
+      className="flex w-90 shrink-0 flex-col border-l border-border-soft bg-surface"
     >
       <header className="flex items-center gap-2 border-b border-border-soft px-4 py-3">
         <h2 className="text-sm font-semibold tracking-tight">Project</h2>
