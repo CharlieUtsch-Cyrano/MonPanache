@@ -11,9 +11,11 @@ pin on the map.
 - Manual platform setup — Charlie — `docs/SETUP_CHECKLIST.md` (branch
   protection referencing `lint-and-unit` + `eval`, Project board, Claude
   Code Review app; Doppler deferred until the first secret)
-- First tickets filed 2026-09-02, sitting in Refine: #2 palette correction
-  (the dry-run) · #3 real shell (L — split during Refine) · #4 backend
-  research spike
+- #2 palette correction — the lifecycle dry-run — ran the full loop: eval
+  first (failed 7), fix, gates green local + CI, verifier pass; PR #6 open,
+  awaiting Charlie's merge. `evals/2_palette_tokens` now guards re-drift
+- #3 real shell (L — split during Refine) · #4 backend research spike —
+  filed 2026-09-02, sitting in Refine
 
 ## Recently decided
 
@@ -33,9 +35,9 @@ pin on the map.
   rather than the gate (SETUP_CHECKLIST §1)
 - Ticket #4 (backend) blocks any migration, data layer, or auth work
 
-**Next up:** run #4 (backend research) — the spike gives it a concrete
-first workload: a daily Gmail sweep feeding the review queue · run #2
-(palette) as the lifecycle dry-run · refine #3 (shell). Proposed
+**Next up:** merge PR #6 (#2 palette dry-run — gates green) · run #4
+(backend research) — the spike gives it a concrete first workload: a daily
+Gmail sweep feeding the review queue · refine #3 (shell). Proposed
 re-sequencing now the bet is validated: extraction loop + review queue
 before deep manual-spine polish (Charlie to confirm; would ship as a PR
 amending the build order)
