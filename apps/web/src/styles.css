@@ -37,30 +37,31 @@
   --color-brand: var(--brand-primary);
   --color-brand-dark: var(--brand-secondary);
   /* brand-ink: the ACCESSIBLE brand color for text/meaningful icons (WCAG
-     1.4.3 — 4.5:1). The light brand (cyan) fails on light surfaces, so ink
-     resolves to the dark brand in light mode and the light brand in dark
-     mode. Use `text-brand-ink` for any brand-colored text; keep `brand` for
-     fills, tints, and decorative accents. */
+     1.4.3 — 4.5:1). Light indigo fails on light surfaces, so ink resolves
+     to the deep brand in light mode and the light brand in dark mode. Use
+     `text-brand-ink` for any brand-colored text; keep `brand` for fills,
+     tints, and decorative accents. */
   --color-brand-ink: var(--brand-ink);
 
   --color-warning: var(--warning);
   --color-danger: var(--danger);
   --color-success: var(--success);
 
-  /* Urgency tokens (DESIGN-GUIDELINES §4): the board's column accents.
-     Semantic — components never reach for raw danger/warning directly to
-     mean urgency. Matches the design export: red=now, amber=today, green=week. */
-  --color-urgency-now: var(--danger);
-  --color-urgency-today: var(--warning);
+  /* Urgency tokens: the board's column accents. Semantic — components
+     never reach for raw danger/warning directly to mean urgency. Decision
+     007: amber=now · indigo=today · green=week · gray=note; red is
+     reserved for overdue only, never mere urgency. */
+  --color-urgency-now: var(--accent);
+  --color-urgency-today: var(--brand-ink);
   --color-urgency-week: var(--success);
   --color-urgency-note: var(--muted);
 }
 
-/* Brand color slots — matched to the design export (Cyrano pair): teal
-   accents, deep navy fills. Logo will be regenerated to match. */
+/* Brand color slots — the MonPanache indigos (decision 007), matching the
+   MP logo and deliberately distinct from Cyrano cyan/navy. */
 :root {
-  --brand-primary: #00c4d3; /* teal */
-  --brand-secondary: #001e45; /* deep navy */
+  --brand-primary: #818cf8; /* light indigo */
+  --brand-secondary: #312e81; /* deep indigo */
 }
 
 /* ============ LIGHT THEME (default) ============ */
@@ -78,7 +79,7 @@
   --muted: oklch(0.5 0.015 270);
   --muted-foreground: oklch(0.42 0.018 270);
 
-  --primary: var(--brand-secondary); /* deep navy — AA on white */
+  --primary: var(--brand-secondary); /* deep indigo — AA on white */
   --primary-foreground: oklch(0.99 0.005 270);
 
   --accent: oklch(0.68 0.15 65); /* amber — the "now" accent */
@@ -107,7 +108,7 @@
   --muted: oklch(0.7 0.015 270);
   --muted-foreground: oklch(0.62 0.02 270);
 
-  --primary: var(--brand-primary, oklch(0.72 0.12 200)); /* teal */
+  --primary: var(--brand-primary); /* light indigo */
   --primary-foreground: oklch(0.18 0.018 270);
 
   --accent: oklch(0.82 0.14 80); /* amber, brightened for dark surfaces */
