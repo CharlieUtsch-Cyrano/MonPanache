@@ -2,7 +2,7 @@
   "name": "cyrano-task-manager",
   "private": true,
   "type": "module",
-  "description": "Cyrano-Task-Manager — internal task tool, operating system first",
+  "description": "MonPanache — internal task tool on the AIDLC operating system",
   "engines": {
     "node": ">=22"
   },
@@ -12,9 +12,10 @@
   ],
   "scripts": {
     "dev": "npm run dev -w apps/web",
-    "typecheck": "tsc -p packages/contracts && tsc -p apps/web && tsc -p apps/web/tsconfig.node.json",
+    "typecheck": "tsc -p packages/contracts && tsc -p apps/web && tsc -p apps/web/tsconfig.node.json && tsc -p tsconfig.evals.json",
     "lint": "biome check .",
     "test": "vitest run",
+    "eval": "vitest run --config vitest.eval.config.ts",
     "build": "npm run build -w apps/web",
     "check": "npm run typecheck && npm run lint && npm test && npm run build",
     "prepare": "husky"

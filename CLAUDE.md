@@ -1,115 +1,72 @@
-# CLAUDE.md — how to work in this repository
-
-Instructions for Claude, Cursor, and any AI assistant or new developer.
-**Keep this file byte-identical in spirit with [AGENTS.md](./AGENTS.md).** If you
-change a standing rule, update **both** in the same PR. This copy exists
-because Claude Code loads `CLAUDE.md` first; a pointer-only file is how
-sessions miss the rules.
+# MonPanache — the map
 
 ## What this is
 
-**MonPanache** (repo `CharlieUtsch-Cyrano/MonPanache`) — an internal Cyrano
-tool for managing projects and tasks, run framework-first. Every file should
-be a pattern worth copying. The tree stays green.
+**MonPanache** — *"Know what needs you now. Automate what repeats."* —
+Cyrano's internal task-intelligence tool. Tasks originate where work happens
+(Zoom customer calls, Gmail, your head); an extraction step **proposes**
+tasks with customer and context attached, a human accepts them from the
+review queue, and the board ranks them by urgency. Build order: manual spine
+→ Gmail ingestion → Zoom → backfill → automation (README.md has the full
+vision).
 
-Sibling repos you must not confuse with this one:
-
-| Repo | Role |
-| --- | --- |
-| `MonPanache` (this) | Internal task tool. Own repo, own database. |
-| `CyranoApp-AI-Production` | Customer product. AWS. Production rules. |
-| Cyrano AI Tools | Lab + internal pilot. Hostinger + Supabase. |
-| CyranoAPP-Design | UI sandbox. Mocks. One-way port source for UI patterns. |
-
-Port UI patterns one way (Design/Production → here). Do not import those
-trees at runtime and never point this app at their databases.
-
-## Before building ANYTHING
-
-1. Read **FEATURE-PLAYBOOK.md**. Follow it literally — including **depth** and
-   the **construction gate** (§3).
-2. Read **PROJECT-MEMORY.md** so you do not reopen locked decisions.
-3. Check **ARCHITECTURE.md** building blocks and **GLOSSARY.md** before naming
-   anything.
-
-## Golden rules (review rejection)
-
-- **Every user action is a command** in the web command registry, with a Zod
-  schema in `packages/contracts`. UI and agents call `executeCommand`. No
-  bespoke `onClick` for command-shaped work.
-- **Shareable view state lives in the URL.** Prefs → persisted Zustand; shared
-  runtime → Zustand; ephemeral → `useState`. A filtered task view you cannot
-  paste into Slack is in the wrong place.
-- **No new dependencies** without owner approval and a permissive license
-  (MIT / ISC / Apache-2.0 / BSD / OFL). Update THIRD-PARTY-NOTICES.md in the
-  same PR.
-- **Design tokens only, never hex.** Both themes must work.
-- **WCAG 2.2 AA.** Targets ≥ 24px (44px touch), keyboard path, `aria-label` on
-  icon buttons, live regions for async work, both themes.
-- **All data access goes through `lib/data/`** (the one data layer). No
-  Supabase client calls scattered through components or pages.
-- **RLS on every table, from the first migration.** Never ship the service
-  key to the browser; the anon key + RLS is the trust boundary.
-- **Deletes are soft or undoable.** Destructive commands produce a visible,
-  reversible run — never a silent mutation.
-- **No `any` on data access.** Zod at the boundary.
-- **No god files.** Lean pages; extract by responsibility. A 2,000-line page
-  is a reject.
-- **One glossary.** A second noun for the same entity is a review reject.
-  (It is a **Task**, not a todo/item/ticket/card.)
-- **Update docs in the same change** if you add a pattern, command, or
-  dependency. If you invent a pattern, the playbook changes in the same PR or
-  the PR does not merge.
-- **No customer-confidential data or PHI in tasks.** See COMPLIANCE.md.
-- **Propose, then wait.** Standard or Comprehensive work (FEATURE-PLAYBOOK §3):
-  post a short bolt plan (recipes, files, tests, out of scope) and wait for a
-  human yes before Construction. Do not scaffold “while they think.”
-- **Match depth to the work.** A typo is Minimal. A new app or schema change
-  is Comprehensive. Do not run platform ceremony on a one-line fix.
-- **A human correction is a standing rule.** Same change: AGENTS.md / playbook
-  / PROJECT-MEMORY. Do not keep it only in chat.
-
-## Locked decisions you must not reopen in a feature PR
-
-See PROJECT-MEMORY.md for the full log. Short list:
-
-- Own repo, own database. Not a feature of Tools, Production, or Design.
-- Framework modeled on CyranoApp-AI-Production; ceremony scaled to an
-  internal tool.
-- One data layer (`lib/data/`) with a documented seam to a BFF later.
-- The product and repo are **MonPanache** (updated 2026-09-02); the npm
-  package stays `cyrano-task-manager`. One name each — do not introduce a
-  third.
-
-## Do NOT "fix" these (they are intentional)
-
-- Empty `apps/*` / `packages/*` / `supabase/` skeletons during charter — they
-  exist so layering is real before features land.
-- The `supabase/` folder while the backend decision is **Open** in
-  PROJECT-MEMORY — do not install a backend SDK or write a migration until
-  that decision is locked.
-
-## Verifying your work (required before claiming done)
-
-```bash
-npm run check
-```
-
-Zero warnings. Tests for new behavior in the same PR. Never weaken CI to
-`--passWithNoTests`.
+The repo runs on the AIDLC operating model ported from Cyrano-AI-OS
+(decision 001): tickets are the prompt, evals are written first and gate the
+merge, settled calls live in decision records. This file is the map, not an
+encyclopedia. Hard cap: 150 lines (enforced by `evals/000_smoke`).
 
 ## Map
 
-| Need | Look in |
-| --- | --- |
-| Where we left off + decision log | **PROJECT-MEMORY.md** |
-| Doc index | README.md |
-| How to build a feature | FEATURE-PLAYBOOK.md |
-| Repos / lanes | LANES.md |
-| One noun per concept | GLOSSARY.md |
-| Structure, seams | ARCHITECTURE.md |
-| Code rules | CODING-GUIDELINES.md |
-| Visual / UX | DESIGN-GUIDELINES.md |
-| Auth, RLS, secrets | SECURITY.md |
-| WCAG | ACCESSIBILITY.md |
-| Data boundaries | COMPLIANCE.md |
+- `apps/web/` → the SPA (React 19, TypeScript strict, Vite, Tailwind v4) —
+  mock urgency-column board today; real shell is a Ready-ticket away
+- `packages/contracts/` → shared Zod schemas (locked task taxonomies)
+- `evals/` → eval suites, one per ticket — see `evals/README.md`
+- `supabase/` → schema owner; **empty until decision 013 (backend) is
+  accepted** — no backend SDK, no migration before then
+- `docs/` → `GLOSSARY.md` · `TOOLS_INDEX.md` · `SETUP_CHECKLIST.md` ·
+  `decisions/` · `THIRD-PARTY-NOTICES.md`
+- `.claude/` → `settings.json` (permissions + hooks) · `skills/` · `agents/`
+- `.github/` → ticket + PR templates · CODEOWNERS · `workflows/gates.yml`
+- `REVIEW.md` → PR review policy, read by Claude Code Review on every PR
+
+## Run
+
+`make dev` · `make lint` · `make test` · `make eval` — the stable agent
+interface. Windows without make: `npm run dev` · `npm run lint && npm run
+typecheck` · `npm test` · `npm run eval`. CI runs `make eval` inside the
+Docker image built from `./Dockerfile` — the CI run is authoritative.
+
+## Always
+
+- Read `PROJECT_STATE.md` before starting any ticket.
+- Every ticket branch adds an eval in `evals/` before the implementation.
+- Never touch secrets: reference names only. No `.env` values in the diff.
+- **No PHI or customer-confidential content anywhere** — code, fixtures,
+  mock data, excerpt strings (decision 008). Invented data only.
+- One noun per concept (`docs/GLOSSARY.md`). A Task is never a todo, item,
+  or card; a second name for an entity is a review reject.
+- Settled calls live in `docs/decisions/` — a feature PR doesn't reopen
+  them; propose a superseding record instead.
+- New dependencies need owner approval + a permissive license, recorded in
+  `docs/THIRD-PARTY-NOTICES.md` in the same PR (decision 012).
+
+## Venue routing — say your call before you start
+
+- Exploratory, interactive, or needs uncommitted code → **LOCAL**
+- Fully specified ticket, long-running, or parallel → **CLOUD**
+
+## Growth triggers — the system grows itself
+
+- **Subsystem CLAUDE.md** — same folder-local instruction repeated 3×, or a
+  folder's rules override these defaults → propose `<folder>/CLAUDE.md` via
+  PR. Max 40 lines: purpose · hard rules · gotchas · pointers.
+- **New skill** — the 2nd time anyone performs a >3-step procedure →
+  `.claude/skills/<name>/SKILL.md`; description written as a trigger
+  ("Use when…"), steps end in a verification.
+- **Tool catalog row** — the moment a tool or capability is added → one line
+  in `docs/TOOLS_INDEX.md`.
+- **Decision record** — a debate gets settled → one short dated file in
+  `docs/decisions/` (start from `000-template.md`).
+- **New eval** — every ticket; and every production failure becomes an eval
+  before it gets fixed.
+- **New CI check** — the 2nd time a class of bug reaches a PR.

@@ -1,0 +1,5 @@
+# Review routing. The evals/ and .claude/ rows are load-bearing: they make
+# weakening a gate require owner sign-off (evals/README.md rule 3).
+*          @CharlieUtsch-Cyrano
+/evals/    @CharlieUtsch-Cyrano
+/.claude/  @CharlieUtsch-Cyrano

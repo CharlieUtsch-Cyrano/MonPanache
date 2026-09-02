@@ -1,0 +1,70 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(make dev)",
+      "Bash(make lint)",
+      "Bash(make test)",
+      "Bash(make eval)",
+      "Bash(npm run:*)",
+      "Bash(npm ci)",
+      "Bash(npm install)",
+      "Bash(npm test:*)",
+      "Bash(npx biome:*)",
+      "Bash(npx vitest:*)",
+      "Bash(npx tsc:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git switch:*)",
+      "Bash(git branch:*)",
+      "Bash(git pull:*)",
+      "Bash(git fetch:*)",
+      "Bash(git push:*)",
+      "Bash(docker build:*)",
+      "Bash(docker run:*)",
+      "Bash(doppler run:*)",
+      "Bash(doppler setup:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh pr view:*)"
+    ],
+    "deny": [
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(npm publish:*)",
+      "Bash(aws:*)",
+      "Bash(terraform:*)",
+      "Bash(kubectl:*)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PROJECT_DIR}/.claude/hooks/protect-evals.mjs\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PROJECT_DIR}/.claude/hooks/format-file.mjs\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

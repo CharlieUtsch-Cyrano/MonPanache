@@ -8,87 +8,62 @@ and learns your patterns until the routine runs itself. The name is
 Cyrano's dying line: *"mon panache"* — the part of your work that is
 irreducibly yours. The tool automates everything that isn't.
 
-This repo (`MonPanache`) is MonPanache's home — an internal Cyrano
-tool built framework-first, modeled on the CyranoApp-AI-Production
-operating system. The playbooks land before the product so we can code
-fast *without* growing another monolith.
+Not a to-do list — a **task intelligence tool**:
 
-This is an **internal tool**, not customer production. The ceremony is
-lighter than CyranoApp-AI-Production, but the discipline is the same:
-one glossary, one command registry, URL-first state, a green tree.
+- **Sources:** Zoom customer-call transcripts, Gmail, and manual capture.
+- **Extraction:** an AI step reads a transcript/email and **proposes** tasks
+  with context and the customer attached. Proposals land in a review queue;
+  a human accepts them onto the board. AI never silently creates
+  (decision 011).
+- **Understanding:** every task gets a **bucket** (type of work, so
+  recurring patterns become visible) and an urgency tier — the board's
+  columns are Now / Today / This Week / Notes, and a schedule overrides
+  manual priority (decision 005).
+- **Build order:** manual spine (board, capture, buckets, urgency) → Gmail
+  ingestion → Zoom → historical backfill → automation of recurring task
+  types (explicitly last).
 
-## Start here — reading order
+This is an internal Cyrano tool with its own repo and its own database
+(decision 002) — never pointed at a sibling repo's systems.
 
-New to the project? Read these in order. The first four are the essential path.
+## How this repo works
 
-| # | Doc | When to read it |
-| --- | --- | --- |
-| 1 | **README.md** (this file) | Orientation: what it is, what it is not, stack, layout. |
-| 2 | **[CONTRIBUTING.md](./CONTRIBUTING.md)** | Before your first commit. Scripts, quality gates, PRs. |
-| 3 | **[CODING-GUIDELINES.md](./CODING-GUIDELINES.md)** | Before writing code. Layering, naming, dependency approval. |
-| 4 | **[FEATURE-PLAYBOOK.md](./FEATURE-PLAYBOOK.md)** | **When building anything.** Decision tree, recipes, Definition of Done. |
-| 5 | **[DESIGN-GUIDELINES.md](./DESIGN-GUIDELINES.md)** | UI: tokens, breakpoints, calm-by-default, accessibility. |
-| 6 | **[ARCHITECTURE.md](./ARCHITECTURE.md)** | App / data layer / contracts. Building blocks. Seams. |
-| 7 | **[LANES.md](./LANES.md)** | Where this repo sits among the Cyrano repos. |
-| 8 | **[GLOSSARY.md](./GLOSSARY.md)** | One noun per concept. A second name is a review reject. |
-| 9 | **[SECURITY.md](./SECURITY.md)** | Auth, row-level security, secrets. |
-| 10 | **[ACCESSIBILITY.md](./ACCESSIBILITY.md)** | WCAG 2.2 AA. |
-| 11 | **[COMPLIANCE.md](./COMPLIANCE.md)** | What must never be pasted into a task. |
-| 12 | **[AGENTS.md](./AGENTS.md)** / **[CLAUDE.md](./CLAUDE.md)** | Standing rules for humans and AI sessions. |
-| 13 | **[PROJECT-MEMORY.md](./PROJECT-MEMORY.md)** | Decision log. Read this when resuming work. |
-| 14 | **[THIRD-PARTY-NOTICES.md](./THIRD-PARTY-NOTICES.md)** | License inventory. Update in the same PR as any dependency. |
+The repo runs on the **AIDLC operating model** (decision 001), ported from
+[Cyrano-AI-OS](https://github.com/Cyrano-Video-Inc/Cyrano-AI-OS): the repo carries everything an agent or a human needs —
+context, rules, skills, evals, and gates.
 
-## What this is not
-
-- Not a feature of CyranoApp-AI-Production, Cyrano AI Tools, or
-  CyranoAPP-Design. It is its own product with its own repo.
-- Not a place to manage customer/hospital work artifacts that contain
-  confidential data (see COMPLIANCE.md).
-- Not a place to skip the playbook. Speed comes from the guardrails, not
-  from skipping them.
-
-## Stack
-
-| Layer | Choice | Status |
-| --- | --- | --- |
-| Web | React 19, TypeScript strict, Vite, Tailwind v4, TanStack Router, Zustand, Radix, Zod | **Locked** (PROJECT-MEMORY #7) |
-| Data | **TBD** — decision required before the first migration (PROJECT-MEMORY, Open) | Open |
-| Quality | Biome, Vitest, `npm run check` always green | **Locked** |
-
-Why this stack: it is the same CTO frontend stack as CyranoApp-AI-Production
-and CyranoAPP-Design, so patterns, components, and muscle memory port
-directly. Whatever backend is chosen, it is called only through the
-`lib/data/` seam with row-level security (or equivalent) as the boundary.
-
-## Layout
-
-| Path | Purpose |
-| --- | --- |
-| `apps/web` | The task manager SPA |
-| `packages/contracts` | Shared Zod schemas (commands, rows, views) |
-| `supabase/` | Migrations + RLS policies (one owner for schema) |
-| `docs` live at repo root (house convention) | |
-
-## The product in one sentence
-
-Tasks originate where work happens — Zoom customer calls, Gmail, your head —
-and this tool gathers them onto one board, attaches context and the
-customer, sorts them into buckets, and ranks what deserves attention now
-vs today vs this week. Automation of recurring task types comes much later.
-Full vision: PROJECT-MEMORY.md.
-
-## First product slice
-
-The manual spine: capture a task in two keystrokes (⌘K), organize into
-projects/buckets with statuses and urgency, filter via a URL-shareable view,
-mark work done. Extracted tasks need somewhere to land — this is that
-somewhere. Gmail ingestion is the second slice, Zoom the third, backfill
-after that.
-
-## Verify
-
-```bash
-npm run check
+```
+ticket (the prompt) → branch · eval written first · build
+   → PR (says what was NOT done) → CI gate (Docker eval)
+   → review → main
 ```
 
-Must be fully green. Same gate as CI.
+Humans gate twice — when the ticket is defined and when the PR is approved.
+Machines gate everything in between; that is what makes agent speed safe.
+
+## Quickstart
+
+```sh
+npm ci
+make lint && make test && make eval   # the same gates CI runs
+make dev                              # Vite dev server
+```
+
+Windows without make: `npm run lint && npm run typecheck`, `npm test`,
+`npm run eval`, `npm run dev`. CI runs `make eval` inside the image built
+from `./Dockerfile` — the one true environment. A red check blocks the merge.
+
+## Where things live
+
+| File | Role |
+| --- | --- |
+| [`CLAUDE.md`](CLAUDE.md) | The map: what's here, how to run it, the growth triggers |
+| [`PROJECT_STATE.md`](PROJECT_STATE.md) | What's happening right now — first read of every session |
+| [`docs/decisions/`](docs/decisions/) | One short dated file per settled debate |
+| [`docs/GLOSSARY.md`](docs/GLOSSARY.md) | One noun per concept — aliases are review rejects |
+| [`docs/SETUP_CHECKLIST.md`](docs/SETUP_CHECKLIST.md) | One-time manual settings (branch protection, board) |
+| [`evals/`](evals/) | One eval suite per ticket — the merge gate |
+| [`REVIEW.md`](REVIEW.md) | PR review policy for Claude Code Review and humans |
+
+New here? Read `CLAUDE.md`, then `PROJECT_STATE.md`, then pull a Ready
+ticket from the board.
