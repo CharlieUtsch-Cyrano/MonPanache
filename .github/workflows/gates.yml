@@ -1,0 +1,26 @@
+# The CI gate: evals run in the real image, not on a laptop.
+# Job ids `lint-and-unit` and `eval` are load-bearing — branch protection
+# references them by name (docs/SETUP_CHECKLIST.md); evals/000_smoke guards
+# them.
+name: gates
+
+on: pull_request
+
+jobs:
+  lint-and-unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: npm
+      - run: npm ci
+      - run: make lint && make test
+
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t app:ci .
+      - run: docker run --rm app:ci make eval

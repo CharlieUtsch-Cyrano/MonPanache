@@ -1,8 +1,8 @@
 # Third-party notices
 
-License inventory. Update in the **same PR** that adds a dependency.
-Until packages are installed, this lists the **intended** stack. Empty
-`license` means "not installed yet — do not import."
+License inventory. Update in the **same PR** that adds a dependency
+(decision 012, clause 6). Empty `license` means "not installed yet — do not
+import."
 
 | Package | Role | License | Notes |
 | --- | --- | --- | --- |
@@ -10,11 +10,11 @@ Until packages are installed, this lists the **intended** stack. Empty
 | typescript | all | Apache-2.0 | strict |
 | vite | web | MIT | |
 | tailwindcss | web | MIT | v4 |
-| @tanstack/react-router | web | MIT | |
-| zustand | web | MIT | |
+| @tanstack/react-router | web | MIT | approved, not yet installed (shell ticket) |
+| zustand | web | MIT | approved, not yet installed (shell ticket) |
 | zod | contracts / web | MIT | |
-| (backend SDK) | data layer only | | pending the backend decision (PROJECT-MEMORY, Open) — do not install |
-| vitest | test | MIT | |
+| (backend SDK) | data layer only | | pending decision 013 — do not install |
+| vitest | test + evals | MIT | |
 | biome | lint/format | MIT / Apache-2.0 | |
 | @types/react / @types/react-dom / @types/node | dev types | MIT | tooling only |
 | @vitejs/plugin-react | build | MIT | |
