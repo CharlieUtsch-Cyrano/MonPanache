@@ -4,32 +4,43 @@ Update after EVERY merged PR · one page max · the first read of every
 session, agent and human alike. Git history is the archive; this is only the
 pin on the map.
 
-**Milestone:** v0.1 — AIDLC operating system live in MonPanache
+**Milestone:** v0.1 — AIDLC operating system live (PR #1 merged 2026-09-02)
 
 ## In progress
 
-- AIDLC adoption — branch `feat/aidlc-operating-system`: the charter OS
-  (13 root docs) replaced by the Cyrano-AI-OS machinery; locked decisions
-  converted to `docs/decisions/001–013`; eval gate + hooks + templates live
+- Manual platform setup — Charlie — `docs/SETUP_CHECKLIST.md` (branch
+  protection referencing `lint-and-unit` + `eval`, Project board, Claude
+  Code Review app; Doppler deferred until the first secret)
+- First tickets filed 2026-09-02, sitting in Refine: #2 palette correction
+  (the dry-run) · #3 real shell (L — split during Refine) · #4 backend
+  research spike
 
 ## Recently decided
 
-- 001 — adopt AIDLC, retiring the playbook/bolt model (2026-09-02)
-- 002–012 — the charter-era locked decisions, converted from the retired
-  PROJECT-MEMORY log into `docs/decisions/` (originals 2026-08-26/27)
-- 007 — palette reaffirmed indigo+amber; `styles.css` drifted to the design
-  export's teal/navy and needs the correction ticket
+- 001 — adopt AIDLC, retiring the charter playbook/bolt model (2026-09-02)
+- 002–012 — charter-era locked decisions converted to `docs/decisions/`
+- 007 — palette reaffirmed indigo+amber; the `styles.css` drift is ticket #2
+- 013 — backend deliberately OPEN; settled by ticket #4
+- **Extraction spike PASSED** (#7, 2026-09-02): real-Gmail extraction
+  produced 16 review-queue proposals, graded good/thorough by Charlie —
+  the product bet is validated. Learnings in the ticket: Zoom
+  pre-summarizes; "waiting on X" wants first-class treatment; first real
+  bucket-taxonomy data; the wedge is extraction + review queue
 
 ## Blockers
 
-- Manual platform setup → `docs/SETUP_CHECKLIST.md` (branch protection,
-  Project board, Claude Code Review app; Doppler when the first secret lands)
+- Branch protection not yet enabled — until then, merges rely on discipline
+  rather than the gate (SETUP_CHECKLIST §1)
+- Ticket #4 (backend) blocks any migration, data layer, or auth work
 
-**Next up:** finish `docs/SETUP_CHECKLIST.md` · file + run the first three
-tickets: (1) `styles.css` → indigo/amber per decision 007 — the dry-run,
-(2) real shell: router + Zustand + command registry + URL-first board state
-(decision 012), (3) backend research spike → comparison → accept decision 013
+**Next up:** run #4 (backend research) — the spike gives it a concrete
+first workload: a daily Gmail sweep feeding the review queue · run #2
+(palette) as the lifecycle dry-run · refine #3 (shell). Proposed
+re-sequencing now the bet is validated: extraction loop + review queue
+before deep manual-spine polish (Charlie to confirm; would ship as a PR
+amending the build order)
 
-**Open questions:** backend platform (decision 013, open — blocks any
-migration) · bucket taxonomy (emerges from Gmail backfill + real use, not
-invented) · SPA hosting · auth provider (follows the backend)
+**Open questions:** backend platform (#4) · raw Zoom-transcript extraction
+(untested — spike used Zoom's summary) · "waiting on X" as a first-class
+concept before the schema lands · bucket taxonomy (first real data in #7)
+· SPA hosting · auth provider (follows the backend)
