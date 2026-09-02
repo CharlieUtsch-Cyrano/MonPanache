@@ -43,15 +43,31 @@ this file in a follow-up PR.
 - [ ] `doppler setup` in the repo root to link the checkout
 - [ ] Add a row to `docs/TOOLS_INDEX.md` with the project name
 
-## 6. Rollout
+## 6. Cloud accounts & connections (decision 013 — ~1–2 hours, Charlie)
 
-- [ ] File the first three tickets to the Definition of Ready:
-      1. Correct `styles.css` to the indigo/amber palette (decision 007)
-      2. Real shell: TanStack Router + Zustand + command registry +
-         URL-first board state (decision 012)
-      3. Backend research spike → comparison → accept decision 013
-- [ ] Run ticket 1 start to finish as the dry-run: plan → eval fails →
-      build → gates green → merged
+- [ ] **AWS (UtschWorks org):** confirm/create the MonPanache account and
+      pick the home region; note account ID for CDK. Ticket #8 supplies the
+      exact `cdk bootstrap` command and the GitHub-Actions OIDC deploy role.
+- [ ] **Bedrock:** in that account/region, request Claude model access in
+      the Bedrock console (a checkbox; usually instant).
+- [ ] **Gmail:** Google Cloud project → enable Gmail API → OAuth consent
+      screen set to **Internal** (Workspace domain skips verification) →
+      OAuth client (web) → run the one-time consent as
+      charlie.utsch@cyranovideo.com; the refresh token goes into Secrets
+      Manager (name only in code). Scope: `gmail.readonly`.
+- [ ] **Zoom:** Marketplace → **user-level OAuth app** (the login-page
+      flow — no admin needed; see ticket #12) with cloud-recording read
+      scope; add a `recording.completed` event subscription (webhook URL
+      comes from ticket #12's deploy); credentials into Secrets Manager.
+      S2S app is the fallback if account settings block user apps.
+- [ ] **Doppler:** create the project now that real secrets exist; add a
+      TOOLS_INDEX row with the project name.
 
-Done when: ticket 1 is merged, the gates went green, and PROJECT_STATE.md
-reflects it. The lifecycle is live.
+## 7. Rollout
+
+- [x] First tickets filed (2026-09-02): #2 palette · #3 shell · #4 backend
+      (done — decision 013 accepted) · #7 extraction spike (done, PASS) ·
+      #8–#13 the AWS build-out train
+- [x] Run a ticket start to finish as the dry-run — **done 2026-09-02:**
+      #2 palette ran the full loop (eval failed first, fix, gates green,
+      verifier pass) and merged as PR #6. **The lifecycle is live.**
