@@ -21,6 +21,11 @@ pin on the map.
 - 002–012 — charter-era locked decisions converted to `docs/decisions/`
 - 007 — palette reaffirmed indigo+amber; the `styles.css` drift is ticket #2
 - 013 — backend deliberately OPEN; settled by ticket #4
+- **Extraction spike PASSED** (#7, 2026-09-02): real-Gmail extraction
+  produced 16 review-queue proposals, graded good/thorough by Charlie —
+  the product bet is validated. Learnings in the ticket: Zoom
+  pre-summarizes; "waiting on X" wants first-class treatment; first real
+  bucket-taxonomy data; the wedge is extraction + review queue
 
 ## Blockers
 
@@ -28,10 +33,14 @@ pin on the map.
   rather than the gate (SETUP_CHECKLIST §1)
 - Ticket #4 (backend) blocks any migration, data layer, or auth work
 
-**Next up:** Charlie promotes #2 to Ready · run #2 start to finish as the
-lifecycle dry-run (plan → eval fails → build → gates green → merge) · refine
-and split #3 · run #4's comparison and accept decision 013
+**Next up:** run #4 (backend research) — the spike gives it a concrete
+first workload: a daily Gmail sweep feeding the review queue · run #2
+(palette) as the lifecycle dry-run · refine #3 (shell). Proposed
+re-sequencing now the bet is validated: extraction loop + review queue
+before deep manual-spine polish (Charlie to confirm; would ship as a PR
+amending the build order)
 
-**Open questions:** backend platform (#4) · bucket taxonomy (emerges from
-Gmail backfill + real use, not invented) · SPA hosting · auth provider
-(follows the backend)
+**Open questions:** backend platform (#4) · raw Zoom-transcript extraction
+(untested — spike used Zoom's summary) · "waiting on X" as a first-class
+concept before the schema lands · bucket taxonomy (first real data in #7)
+· SPA hosting · auth provider (follows the backend)
