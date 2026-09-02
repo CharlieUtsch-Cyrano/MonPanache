@@ -11,7 +11,7 @@ another.
 | Customer product | `CyranoApp-AI-Production` | AWS | Production rules, tenancy, SLO |
 | Lab (prototypes) | Cyrano AI Tools | Hostinger VPS + Supabase | Experiment speed |
 | Design / reference | `CyranoAPP-Design` | Static, mocks | UI patterns, one-way port source |
-| **Internal tools (this repo)** | `Cyrano-Task-Manager` | Static SPA + its **own** Supabase project | Framework-first, lighter ceremony |
+| **Internal tools (this repo)** | `MonPanache` | Static SPA + its **own** Supabase project | Framework-first, lighter ceremony |
 
 ## Lifecycle labels
 

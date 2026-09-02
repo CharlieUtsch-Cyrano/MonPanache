@@ -1,6 +1,6 @@
 # apps/web
 
-The Cyrano-Task-Manager SPA. Not scaffolded yet. When it is:
+The MonPanache SPA. Not scaffolded yet. When it is:
 
 - Seed the shell (rail, ⌘K palette, activity feed, theme) by porting patterns
   from CyranoAPP-Design / CyranoApp-AI-Production — one way.

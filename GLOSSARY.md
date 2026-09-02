@@ -22,8 +22,8 @@ reject PRs that introduce aliases.
 | **Run** | job, spinner, toast-with-side-effects | A visible, undoable execution of a command in the activity store |
 | **Command** | handler, onClick, RPC | Typed verb in the registry + contracts package (`task.create`) |
 | **Data layer** | “the client”, api utils, helpers | `lib/data/` — the only module that touches Supabase |
-| **MonPanache** | Panache (superseded), the tracker, task app, CTM | The product (named 2026-08-27, from Cyrano's *"mon panache"*). Tagline: "Know what needs you now. Automate what repeats." |
-| **Cyrano-Task-Manager** | — | The repo / npm package that holds MonPanache |
+| **MonPanache** | Panache (superseded), the tracker, task app, CTM | The product **and** the repo (named 2026-08-27; repo renamed 2026-09-02, from Cyrano's *"mon panache"*). Tagline: "Know what needs you now. Automate what repeats." |
+| **Cyrano-Task-Manager** | — | Legacy repo name (secondary remote) and the npm package (`cyrano-task-manager`) |
 | **Bolt** | sprint, stage, “just ship it” | One approved Construction slice: plan accepted, then implement + tests + DoD |
 | **Construction gate** | approval theater | Human yes on the bolt plan before behavior-changing code. FEATURE-PLAYBOOK §3 |
 | **Depth** | “always Comprehensive” | Minimal / Standard / Comprehensive — how much plan-and-gate the session uses |

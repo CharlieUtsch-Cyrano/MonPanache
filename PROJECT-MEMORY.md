@@ -1,8 +1,8 @@
-# Project Memory — Cyrano-Task-Manager
+# Project Memory — MonPanache
 
 Compact state + decision log. Anyone (teammate or a new AI session) should
 read this and continue without reopening settled calls. Update when a decision
-lands. Last updated: **2026-08-26**.
+lands. Last updated: **2026-09-02**.
 
 ## Product vision (Charlie, 2026-08-26)
 
@@ -57,13 +57,14 @@ Gmail ingestion, then Zoom, then backfill, then automation.
 4. **RLS from day one.** Every table gets row-level security in the same
    migration that creates it. *Why:* retrofitting RLS is how cross-user leaks
    happen; the Tools repo proved unenforced rules do not count.
-5. **Names (updated 2026-08-27, Charlie):** the product is **MonPanache**
+5. **Names (updated 2026-09-02, Charlie):** the product is **MonPanache**
    (one word — Cyrano's "mon panache") — tagline *"Know what needs you now.
-   Automate what repeats."* Chosen over plain Panache for uniqueness. The
-   repo and npm package stay `Cyrano-Task-Manager` / `cyrano-task-manager`.
-   MonPanache is what users (and docs) call the product; Cyrano-Task-Manager
-   names the repo. No third name, ever. Logo direction: **not** Cyrano
-   imagery — no plume, feather, or quill (Charlie, 2026-08-27).
+   Automate what repeats."* Chosen over plain Panache for uniqueness.
+   The primary GitHub repo is **`CharlieUtsch-Cyrano/MonPanache`**
+   (Charlie, 2026-09-02; the old `Cyrano-Task-Manager` repo remains as the
+   secondary git remote `cyrano-task-manager`). The npm package stays
+   `cyrano-task-manager`. No third name, ever. Logo direction: **not**
+   Cyrano imagery — no plume, feather, or quill (Charlie, 2026-08-27).
 6. **Agent sessions: propose → gate → bolt; depth matches the work.**
    Corrections become standing rules. Same model as the production repo; do
    not install a second agent OS.

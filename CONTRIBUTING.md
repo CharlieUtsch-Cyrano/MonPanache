@@ -1,6 +1,6 @@
 # Contributing
 
-This is **Cyrano-Task-Manager**, an internal tool run framework-first. The
+This is **MonPanache**, an internal tool run framework-first. The
 bar is: the tree stays green, and every file that exists is a pattern worth
 copying.
 

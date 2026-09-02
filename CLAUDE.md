@@ -8,15 +8,15 @@ sessions miss the rules.
 
 ## What this is
 
-**Cyrano-Task-Manager** — an internal Cyrano tool for managing projects and
-tasks, run framework-first. Every file should be a pattern worth copying.
-The tree stays green.
+**MonPanache** (repo `CharlieUtsch-Cyrano/MonPanache`) — an internal Cyrano
+tool for managing projects and tasks, run framework-first. Every file should
+be a pattern worth copying. The tree stays green.
 
 Sibling repos you must not confuse with this one:
 
 | Repo | Role |
 | --- | --- |
-| `Cyrano-Task-Manager` (this) | Internal task tool. Own repo, own database. |
+| `MonPanache` (this) | Internal task tool. Own repo, own database. |
 | `CyranoApp-AI-Production` | Customer product. AWS. Production rules. |
 | Cyrano AI Tools | Lab + internal pilot. Hostinger + Supabase. |
 | CyranoAPP-Design | UI sandbox. Mocks. One-way port source for UI patterns. |
@@ -77,8 +77,9 @@ See PROJECT-MEMORY.md for the full log. Short list:
 - Framework modeled on CyranoApp-AI-Production; ceremony scaled to an
   internal tool.
 - One data layer (`lib/data/`) with a documented seam to a BFF later.
-- The product is **MonPanache**; the repo/package stay `Cyrano-Task-Manager`.
-  One name each — do not introduce a third.
+- The product and repo are **MonPanache** (updated 2026-09-02); the npm
+  package stays `cyrano-task-manager`. One name each — do not introduce a
+  third.
 
 ## Do NOT "fix" these (they are intentional)
 

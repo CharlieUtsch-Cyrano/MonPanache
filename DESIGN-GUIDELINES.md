@@ -1,7 +1,7 @@
 # Design Guidelines
 
 The house visual framework, ported one way from CyranoAPP-Design /
-CyranoApp-AI-Production. Binding for **Cyrano-Task-Manager**.
+CyranoApp-AI-Production. Binding for **MonPanache**.
 
 Until `apps/web` is seeded, paths like `styles.css` and `lib/commands.ts`
 describe the intended shape. Do not invent a second visual language.

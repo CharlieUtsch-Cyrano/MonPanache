@@ -8,7 +8,7 @@ and learns your patterns until the routine runs itself. The name is
 Cyrano's dying line: *"mon panache"* — the part of your work that is
 irreducibly yours. The tool automates everything that isn't.
 
-This repo (`Cyrano-Task-Manager`) is MonPanache's home — an internal Cyrano
+This repo (`MonPanache`) is MonPanache's home — an internal Cyrano
 tool built framework-first, modeled on the CyranoApp-AI-Production
 operating system. The playbooks land before the product so we can code
 fast *without* growing another monolith.

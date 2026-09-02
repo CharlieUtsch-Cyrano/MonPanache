@@ -1,6 +1,6 @@
 # Feature Playbook
 
-**Start here when you're about to build something** in **Cyrano-Task-Manager**.
+**Start here when you're about to build something** in **MonPanache**.
 This is the house playbook (modeled on CyranoApp-AI-Production's) scaled to an
 internal tool: the ceremony is lighter, the invariants are not.
 
